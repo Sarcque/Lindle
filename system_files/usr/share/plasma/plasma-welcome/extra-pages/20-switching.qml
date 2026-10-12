@@ -11,7 +11,7 @@ import org.kde.plasma.welcome as Welcome
 Welcome.Page {
     id: root
 
-    title: "Coming from Windows or Mac?"
+    heading: "Coming from Windows or Mac?"
     description: "Most things work the way you are used to. Here is where to find the rest."
 
     GridLayout {

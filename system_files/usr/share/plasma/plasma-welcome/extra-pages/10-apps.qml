@@ -9,7 +9,7 @@ import org.kde.plasma.welcome as Welcome
 Welcome.Page {
     id: root
 
-    title: "Your Apps"
+    heading: "Your Apps"
     description: "Lindle comes with a full office and photo suite, so you can get started right away. Each app is free and open source, and they are all pinned to your dock.\n\nClick an app to open it."
 
     GridLayout {
