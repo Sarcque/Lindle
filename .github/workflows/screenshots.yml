@@ -57,7 +57,7 @@ jobs:
           config-file: ./disk_config/screenshot-vm.toml
           image: ${{ env.IMAGE }}
           types: qcow2
-          additional-args: --use-librepo=True
+          additional-args: --use-librepo=True --rootfs=btrfs
 
       - name: Install QEMU
         run: |
