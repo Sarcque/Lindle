@@ -1,0 +1,36 @@
+---
+name: Lint
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+jobs:
+  lint:
+    name: Lint scripts, configs and design tokens
+    runs-on: ubuntu-26.04
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+
+      - name: Shellcheck build scripts
+        run: |
+          find build_files -name '*.sh' -print0 | xargs -0 shellcheck -x
+
+      - name: Validate JSON
+        run: |
+          find design system_files -name '*.json' -print0 | xargs -0 -n1 python3 -m json.tool > /dev/null
+
+      - name: Check color contrast
+        run: |
+          python3 design/generate.py --check
+
+      - name: Check generated color schemes are up to date
+        run: |
+          python3 design/generate.py
+          git diff --exit-code -- system_files/usr/share/color-schemes

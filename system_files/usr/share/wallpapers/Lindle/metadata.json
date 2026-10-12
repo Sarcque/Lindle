@@ -1,0 +1,12 @@
+{
+    "KPlugin": {
+        "Authors": [
+            {
+                "Name": "Lindle Contributors"
+            }
+        ],
+        "Id": "Lindle",
+        "License": "CC-BY-SA-4.0",
+        "Name": "Lindle"
+    }
+}
