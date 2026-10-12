@@ -20,8 +20,9 @@ test -f /usr/share/wallpapers/Lindle/contents/images/3840x2160.png
 test -f /usr/share/wallpapers/Lindle/contents/images_dark/3840x2160.png
 grep -q 'LookAndFeelPackage=org.lindle.desktop' /usr/share/kde-settings/kde-profile/default/xdg/kdeglobals
 
-fc-list | grep -qi "Inter"
+# fc-match prints one short line, so grep -q cannot SIGPIPE the producer under pipefail.
+fc-match -f "%{family}\n" "Inter" | grep -qi "^Inter"
 
-systemctl is-enabled flatpak-preinstall.service
+systemctl is-enabled lindle-flatpak-preinstall.service
 systemctl is-enabled rpm-ostreed-automatic.timer
-systemctl is-enabled lindle-flatpak-update.timer
+systemctl is-enabled flatpak-system-update.timer
