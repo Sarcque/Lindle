@@ -22,6 +22,6 @@ grep -q 'LookAndFeelPackage=org.lindle.desktop' /usr/share/kde-settings/kde-prof
 
 fc-list | grep -qi "Inter"
 
-systemctl is-enabled flatpak-preinstall.service
+systemctl is-enabled lindle-flatpak-preinstall.service
 systemctl is-enabled rpm-ostreed-automatic.timer
-systemctl is-enabled lindle-flatpak-update.timer
+systemctl is-enabled flatpak-system-update.timer

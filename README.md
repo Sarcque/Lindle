@@ -9,7 +9,7 @@ Lindle is a modern, open source Linux desktop for people coming from macOS and W
 - **Base:** Fedora KDE (Plasma 6) as an atomic, image-based OS, built on [Universal Blue](https://universal-blue.org/)'s `kinoite-main` image with [bootc](https://github.com/bootc-dev/bootc). Codecs and Flathub come from the base.
 - **Look:** Lindle light and dark color schemes, Inter and JetBrains Mono fonts, Lindle wallpaper, floating taskbar. All colors come from [design/tokens.json](design/tokens.json) and are checked for WCAG contrast in CI.
 - **Apps, installed from Flathub on first boot:** ONLYOFFICE (Word, Excel, PowerPoint), GIMP (Photoshop), Inkscape, Krita, Firefox, Thunderbird, VLC, Bottles (Windows apps).
-- **Updates:** the OS downloads updates in the background and applies them on the next restart; apps update every few hours. A bad OS update can be undone by choosing the previous entry at boot.
+- **Updates:** the OS downloads updates in the background and applies them on the next restart; apps update in the background too. A bad OS update can be undone by choosing the previous entry at boot.
 - **Office-friendly fonts:** Carlito and Caladea, metric-compatible with Calibri and Cambria, so documents keep their layout.
 
 ## Repository layout

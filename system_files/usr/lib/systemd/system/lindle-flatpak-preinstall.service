@@ -1,0 +1,20 @@
+[Unit]
+Description=Install Lindle's preinstalled apps from Flathub
+Documentation=man:flatpak-preinstall(1)
+Wants=network-online.target
+After=network-online.target
+ConditionPathExists=/usr/bin/flatpak
+StartLimitIntervalSec=600
+StartLimitBurst=3
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+# Installs everything listed in /usr/share/flatpak/preinstall.d that is
+# missing, so apps added in later releases arrive with the next boot.
+ExecStart=/usr/bin/flatpak preinstall -y
+Restart=on-failure
+RestartSec=30
+
+[Install]
+WantedBy=multi-user.target
