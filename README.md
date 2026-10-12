@@ -8,8 +8,8 @@ Lindle is a modern, open source Linux desktop for people coming from macOS and W
 
 - **Base:** Fedora KDE (Plasma 6) as an atomic, image-based OS, built on [Universal Blue](https://universal-blue.org/)'s `kinoite-main` image with [bootc](https://github.com/bootc-dev/bootc). Codecs and Flathub come from the base.
 - **Look:** Lindle light and dark color schemes, Inter and JetBrains Mono fonts, Lindle wallpaper, floating taskbar. All colors come from [design/tokens.json](design/tokens.json) and are checked for WCAG contrast in CI.
-- **Storytold Craft apps, built into the OS:** [PhotoCraft](https://github.com/storytold/photocraft) (Photoshop) and [GridCraft](https://github.com/storytold/gridcraft) (Excel), from each project's latest release. [WordCraft](https://github.com/storytold/wordcraft) (Word) and [SlideCraft](https://github.com/storytold/slidecraft) (PowerPoint) are added automatically once they publish their first release.
-- **Apps, installed from Flathub on first boot:** ONLYOFFICE (Word, Excel, PowerPoint), GIMP (Photoshop), Inkscape, Krita, Firefox, Thunderbird, VLC, Bottles (Windows apps).
+- **Storytold Craft apps, built into the OS and pinned to the taskbar:** [WordCraft](https://github.com/storytold/wordcraft) (Word), [GridCraft](https://github.com/storytold/gridcraft) (Excel), [DeckCraft](https://github.com/storytold/deckcraft) (PowerPoint) and [PhotoCraft](https://github.com/storytold/photocraft) (Photoshop), from each project's latest release.
+- **Apps, installed from Flathub on first boot:** ONLYOFFICE (as a fallback for complex Office files), GIMP, Inkscape, Krita, Firefox, Thunderbird, VLC, Bottles (Windows apps).
 - **Updates:** the OS downloads updates in the background and applies them on the next restart; apps update in the background too. A bad OS update can be undone by choosing the previous entry at boot.
 - **Office-friendly fonts:** Carlito and Caladea, metric-compatible with Calibri and Cambria, so documents keep their layout.
 

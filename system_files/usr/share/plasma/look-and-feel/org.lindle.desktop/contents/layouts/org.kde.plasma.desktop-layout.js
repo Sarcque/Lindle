@@ -17,8 +17,9 @@ for (let i = 0; i < allPanels.length; ++i) {
             widget.writeConfig("launchers", [
                 "preferred://browser",
                 "preferred://filemanager",
-                "applications:org.onlyoffice.desktopeditors.desktop",
+                "applications:ai.storyteller.wordcraft.desktop",
                 "applications:ai.storyteller.gridcraft.desktop",
+                "applications:ai.storyteller.deckcraft.desktop",
                 "applications:ai.storyteller.photocraft.desktop",
                 "applications:org.kde.discover.desktop"
             ]);

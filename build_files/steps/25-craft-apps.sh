@@ -3,13 +3,13 @@
 # project's latest stable GitHub release. Lindle images rebuild daily, so a new
 # Craft release reaches users with the next OS update.
 #
-# Required apps fail the build if they can't be installed. Optional apps are
-# installed as soon as their project publishes a stable release.
+# Required apps fail the build if they can't be installed. Optional apps (none
+# right now) are skipped until their project publishes a stable release.
 
 set -ouex pipefail
 
-required=(photocraft gridcraft)
-optional=(wordcraft slidecraft)
+required=(wordcraft gridcraft deckcraft photocraft)
+optional=()
 
 arch="$(uname -m)"
 work="$(mktemp -d)"
@@ -51,7 +51,7 @@ for app in "${required[@]}"; do
     install_app "$app"
 done
 
-for app in "${optional[@]}"; do
+for app in "${optional[@]+"${optional[@]}"}"; do
     install_app "$app" || echo "Skipping $app for now"
 done
 
