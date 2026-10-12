@@ -1,0 +1,19 @@
+{
+    "KPackageStructure": "Plasma/LookAndFeel",
+    "KPlugin": {
+        "Authors": [
+            {
+                "Email": "",
+                "Name": "Lindle Contributors"
+            }
+        ],
+        "Category": "",
+        "Description": "Lindle's dark look: the same layout and type, with dark colors",
+        "Id": "org.lindle.desktop.dark",
+        "License": "Apache-2.0",
+        "Name": "Lindle Dark",
+        "Version": "0.1",
+        "Website": "https://github.com/sarcque/lindle"
+    },
+    "X-Plasma-MainScript": "defaults"
+}

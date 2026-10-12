@@ -3,6 +3,8 @@ name: Screenshots
 
 # Boots the published image in a VM and saves screenshots to the
 # "screenshots" branch, so anyone can see what the current build looks like.
+# Pull requests that change the image build it here and attach the
+# screenshots to the run instead.
 on:
   workflow_dispatch:
   pull_request:
@@ -11,13 +13,16 @@ on:
       - '.github/workflows/screenshots.yml'
       - 'tests/screenshots.sh'
       - 'tests/Containerfile.screenshot'
+      - 'Containerfile'
+      - 'build_files/**'
+      - 'system_files/**'
   workflow_run:
     workflows: ["Build container image"]
     types: [completed]
     branches: [main]
 
 concurrency:
-  group: screenshots
+  group: screenshots-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -44,9 +49,16 @@ jobs:
 
       - name: Pull image
         # bootc install needs the image in local storage.
+        if: github.event_name != 'pull_request'
         run: |
           echo "${{ secrets.GITHUB_TOKEN }}" | sudo podman login ghcr.io -u "${{ github.actor }}" --password-stdin
           sudo podman pull "$IMAGE"
+
+      - name: Build image from this pull request
+        if: github.event_name == 'pull_request'
+        run: |
+          sudo podman build -t localhost/lindle:pr .
+          echo "IMAGE=localhost/lindle:pr" >> "$GITHUB_ENV"
 
       - name: Build VM disk
         # bootc installs the image onto a disk file itself, with a test user
@@ -85,6 +97,7 @@ jobs:
           path: ${{ runner.temp }}/screenshots
 
       - name: Publish to the screenshots branch
+        if: github.event_name != 'pull_request'
         run: |
           cd "$RUNNER_TEMP/screenshots"
           {

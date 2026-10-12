@@ -11,7 +11,7 @@
         "Description": "Lindle's default look: calm colors, Inter type, a floating taskbar",
         "Id": "org.lindle.desktop",
         "License": "Apache-2.0",
-        "Name": "Lindle",
+        "Name": "Lindle Light",
         "Version": "0.1",
         "Website": "https://github.com/sarcque/lindle"
     },

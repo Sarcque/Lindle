@@ -16,6 +16,8 @@ ROOT = Path(__file__).resolve().parent.parent
 TOKENS = ROOT / "design" / "tokens.json"
 SCHEMES_DIR = ROOT / "system_files" / "usr" / "share" / "color-schemes"
 WALLPAPER_DIR = ROOT / "system_files" / "usr" / "share" / "wallpapers" / "Lindle"
+LNF_DIR = ROOT / "system_files" / "usr" / "share" / "plasma" / "look-and-feel"
+LNF_PACKAGES = {"light": "org.lindle.desktop", "dark": "org.lindle.desktop.dark"}
 
 # WCAG 2.x minimums: 4.5 for body text, 3.0 for large text and UI parts.
 CONTRAST_PAIRS = [
@@ -189,6 +191,64 @@ def write_wallpapers(tokens):
     (WALLPAPER_DIR / "metadata.json").write_text(json.dumps(metadata, indent=4) + "\n")
 
 
+def render_preview(tokens, mode, wallpaper):
+    """A simplified desktop (window plus floating panel) for the theme picker."""
+    from PIL import Image, ImageDraw
+
+    p = tokens["color"][mode]
+    r = tokens["radius"]
+    w, h = 1920, 1080
+    img = wallpaper.resize((w, h), Image.LANCZOS).convert("RGBA")
+
+    shadow = Image.new("RGBA", (w, h), (0, 0, 0, 0))
+    ImageDraw.Draw(shadow).rounded_rectangle((470, 170, 1470, 830), r["large"] * 2, fill=(0, 0, 0, 60))
+    from PIL import ImageFilter
+    img = Image.alpha_composite(img, shadow.filter(ImageFilter.GaussianBlur(24)))
+
+    d = ImageDraw.Draw(img)
+    # Window: header bar, sidebar, content with a few rows and an accent button.
+    d.rounded_rectangle((460, 150, 1460, 810), r["large"] * 2, fill=rgb(p["window"]))
+    d.rounded_rectangle((460, 150, 1460, 230), r["large"] * 2, fill=rgb(p["header"]))
+    d.rectangle((460, 200, 1460, 230), fill=rgb(p["header"]))
+    for i, x in enumerate((1400, 1360, 1320)):
+        d.ellipse((x, 180, x + 20, 200), fill=rgb(p["textMuted"]))
+    d.rounded_rectangle((480, 250, 720, 790), r["medium"] * 2, fill=rgb(p["windowAlt"]))
+    d.rounded_rectangle((495, 268, 705, 312), r["small"] * 2, fill=rgb(p["accent"]))
+    for i in range(5):
+        y = 330 + i * 52
+        d.rounded_rectangle((510, y, 520 + 120 + (i * 23) % 50, y + 16), 8, fill=rgb(p["textMuted"]))
+    d.rounded_rectangle((740, 250, 1440, 790), r["medium"] * 2, fill=rgb(p["view"]))
+    d.rounded_rectangle((780, 290, 1100, 320), 10, fill=rgb(p["text"]))
+    for i in range(6):
+        y = 360 + i * 48
+        d.rounded_rectangle((780, y, 1400 - (i * 61) % 180, y + 18), 9, fill=rgb(p["viewAlt"] if i % 2 else p["windowAlt"]))
+    d.rounded_rectangle((1240, 720, 1410, 768), r["small"] * 2, fill=rgb(p["accent"]))
+
+    # Floating panel with launcher dots, the first one active.
+    d.rounded_rectangle((560, 960, 1360, 1040), r["large"] * 2, fill=rgb(p["window"]))
+    for i in range(9):
+        x = 600 + i * 76
+        fill = p["accent"] if i == 0 else (p["windowAlt"] if mode == "light" else p["button"])
+        d.rounded_rectangle((x, 976, x + 48, 1024), r["small"] * 2, fill=rgb(fill))
+    return img.convert("RGB")
+
+
+def write_previews(tokens):
+    try:
+        from PIL import Image
+    except ImportError:
+        print("Pillow not installed, skipping theme previews")
+        return
+    for mode, folder in (("light", "images"), ("dark", "images_dark")):
+        wallpaper = Image.open(WALLPAPER_DIR / "contents" / folder / "3840x2160.png")
+        full = render_preview(tokens, mode, wallpaper)
+        out = LNF_DIR / LNF_PACKAGES[mode] / "contents" / "previews"
+        out.mkdir(parents=True, exist_ok=True)
+        full.save(out / "fullscreenpreview.jpg", quality=88, optimize=True)
+        full.resize((640, 360), Image.LANCZOS).save(out / "preview.png", optimize=True)
+        print(f"wrote {out.relative_to(ROOT)}")
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--check", action="store_true", help="only run contrast checks")
@@ -206,6 +266,7 @@ def main():
         return
     write_schemes(tokens)
     write_wallpapers(tokens)
+    write_previews(tokens)
 
 
 if __name__ == "__main__":

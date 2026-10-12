@@ -19,3 +19,12 @@ else
 fi
 
 fc-cache -f
+
+# Lindle's wallpaper is the default everywhere a "Default" wallpaper is used
+# (new users, the lock screen, the login screen).
+ln -sfn Lindle /usr/share/wallpapers/Default
+defaults=/usr/lib/plasmalogin/defaults.conf
+if [[ -f "$defaults" ]]; then
+    sed -i "s|^Image=.*|Image=file:///usr/share/wallpapers/Lindle/contents/images/3840x2160.png|" "$defaults"
+    cat "$defaults"
+fi
