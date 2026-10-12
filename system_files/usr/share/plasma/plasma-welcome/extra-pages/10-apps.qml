@@ -14,7 +14,7 @@ Welcome.Page {
 
     GridLayout {
         anchors.centerIn: parent
-        columns: root.width > Kirigami.Units.gridUnit * 36 ? 4 : 2
+        columns: root.width > Kirigami.Units.gridUnit * 30 ? 4 : 2
         columnSpacing: Kirigami.Units.gridUnit * 2
         rowSpacing: Kirigami.Units.gridUnit
 
@@ -37,13 +37,7 @@ Welcome.Page {
                         id: app
                         desktopName: modelData.id
                     }
-                    size: Kirigami.Units.gridUnit * 6
-                }
-
-                Kirigami.Heading {
-                    Layout.alignment: Qt.AlignHCenter
-                    level: 3
-                    text: app.name
+                    size: Kirigami.Units.gridUnit * 5
                 }
 
                 Kirigami.Heading {
