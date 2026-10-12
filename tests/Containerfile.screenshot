@@ -1,5 +1,6 @@
-# Lindle plus a throwaway "lindle"/"lindle" user, for the Screenshots workflow
-# only. Never publish this image: the password is public.
 ARG IMAGE=ghcr.io/sarcque/lindle:latest
 FROM ${IMAGE}
-RUN useradd -m -G wheel lindle && echo "lindle:lindle" | chpasswd
+# A known test account, and skip the first-boot setup wizard (plasma-setup)
+# so the VM goes straight to the login screen.
+RUN useradd -m -G wheel lindle && echo "lindle:lindle" | chpasswd && \
+    touch /etc/plasma-setup-done
