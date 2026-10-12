@@ -1,0 +1,6 @@
+ARG IMAGE=ghcr.io/sarcque/lindle:latest
+FROM ${IMAGE}
+# A known test account, and skip the first-boot setup wizard (plasma-setup)
+# so the VM goes straight to the login screen.
+RUN useradd -m -G wheel lindle && echo "lindle:lindle" | chpasswd && \
+    touch /etc/plasma-setup-done

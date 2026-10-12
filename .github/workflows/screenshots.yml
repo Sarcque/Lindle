@@ -1,0 +1,107 @@
+---
+name: Screenshots
+
+# Boots the published image in a VM and saves screenshots to the
+# "screenshots" branch, so anyone can see what the current build looks like.
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/screenshots.yml'
+      - 'tests/screenshots.sh'
+      - 'tests/Containerfile.screenshot'
+  workflow_run:
+    workflows: ["Build container image"]
+    types: [completed]
+    branches: [main]
+
+concurrency:
+  group: screenshots
+  cancel-in-progress: true
+
+jobs:
+  screenshots:
+    name: Boot the image and take screenshots
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-26.04
+    permissions:
+      contents: write
+      packages: read
+    env:
+      IMAGE: ghcr.io/${{ github.repository_owner }}/lindle:latest
+    steps:
+      - name: Maximize build space
+        uses: ublue-os/remove-unwanted-software@695eb75bc387dbcd9685a8e72d23439d8686cba6
+        with:
+          remove-codeql: true
+
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+
+      - name: Lowercase image name
+        run: echo "IMAGE=${IMAGE,,}" >> "$GITHUB_ENV"
+
+      - name: Pull image
+        # bootc install needs the image in local storage.
+        run: |
+          echo "${{ secrets.GITHUB_TOKEN }}" | sudo podman login ghcr.io -u "${{ github.actor }}" --password-stdin
+          sudo podman pull "$IMAGE"
+
+      - name: Build VM disk
+        # bootc installs the image onto a disk file itself, with a test user
+        # layered on top (tests/Containerfile.screenshot).
+        run: |
+          sudo podman build --build-arg IMAGE="$IMAGE" -t localhost/lindle-screenshot -f tests/Containerfile.screenshot tests
+          mkdir -p output
+          truncate -s 40G output/disk.raw
+          sudo podman run --rm --privileged --pid=host \
+            --security-opt label=type:unconfined_t \
+            --security-opt apparmor=unconfined \
+            -v /dev:/dev \
+            -v /var/lib/containers:/var/lib/containers \
+            -v ./output:/output \
+            localhost/lindle-screenshot \
+            bootc install to-disk --generic-image --via-loopback --filesystem btrfs \
+            --wipe --skip-fetch-check /output/disk.raw
+
+      - name: Install QEMU
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends qemu-system-x86 qemu-utils ovmf socat imagemagick
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+
+      - name: Take screenshots
+        run: |
+          sudo chown "$(id -u):$(id -g)" output/disk.raw
+          tests/screenshots.sh output/disk.raw "$RUNNER_TEMP/screenshots"
+
+      - name: Upload screenshots
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: screenshots
+          path: ${{ runner.temp }}/screenshots
+
+      - name: Publish to the screenshots branch
+        run: |
+          cd "$RUNNER_TEMP/screenshots"
+          {
+            echo "# Lindle screenshots"
+            echo
+            echo "Taken automatically from \`$IMAGE\` by the Screenshots workflow."
+            echo
+            for f in *.png; do
+              echo "## ${f%.png}"
+              echo
+              echo "![${f%.png}]($f)"
+              echo
+            done
+          } > README.md
+          git init -q -b screenshots
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -q -m "Screenshots of ${{ github.sha }}"
+          git push -f "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" screenshots
