@@ -1,9 +1,0 @@
-# VM used only by the screenshots workflow. Never ship this: the password is public.
-[[customizations.filesystem]]
-mountpoint = "/"
-minsize = "20 GiB"
-
-[[customizations.user]]
-name = "lindle"
-password = "lindle"
-groups = ["wheel"]

@@ -2,7 +2,7 @@
 # Boot a Lindle VM disk in QEMU and save screenshots of the login screen, the
 # desktop, the start menu and the preinstalled apps.
 #
-#   tests/screenshots.sh <disk.qcow2> <output-dir>
+#   tests/screenshots.sh <disk.raw> <output-dir>
 #
 # Drives the VM through QEMU's monitor (sendkey/screendump), so it needs no
 # agent inside the guest. Timings are generous because CI runners are slow.
@@ -22,7 +22,7 @@ fi
 
 qemu-system-x86_64 \
     -machine q35,accel=kvm -cpu host -smp 4 -m 8G \
-    -drive "file=$disk,if=virtio,format=qcow2,snapshot=on" \
+    -drive "file=$disk,if=virtio,format=raw,snapshot=on" \
     "${firmware[@]}" \
     -device virtio-vga -display none \
     -nic user,model=virtio-net-pci \

@@ -1,0 +1,5 @@
+# Lindle plus a throwaway "lindle"/"lindle" user, for the Screenshots workflow
+# only. Never publish this image: the password is public.
+ARG IMAGE=ghcr.io/sarcque/lindle:latest
+FROM ${IMAGE}
+RUN useradd -m -G wheel lindle && echo "lindle:lindle" | chpasswd

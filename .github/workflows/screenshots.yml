@@ -10,7 +10,7 @@ on:
     paths:
       - '.github/workflows/screenshots.yml'
       - 'tests/screenshots.sh'
-      - 'disk_config/screenshot-vm.toml'
+      - 'tests/Containerfile.screenshot'
   workflow_run:
     workflows: ["Build container image"]
     types: [completed]
@@ -30,7 +30,6 @@ jobs:
       packages: read
     env:
       IMAGE: ghcr.io/${{ github.repository_owner }}/lindle:latest
-      BIB_IMAGE: quay.io/centos-bootc/bootc-image-builder:latest
     steps:
       - name: Maximize build space
         uses: ublue-os/remove-unwanted-software@695eb75bc387dbcd9685a8e72d23439d8686cba6
@@ -50,19 +49,21 @@ jobs:
           sudo podman pull "$IMAGE"
 
       - name: Build VM disk
-        # Run bootc-image-builder directly: Ubuntu runners' AppArmor blocks the
-        # mounts osbuild needs unless the container runs apparmor=unconfined.
+        # bootc installs the image onto a disk file itself, with a test user
+        # layered on top (tests/Containerfile.screenshot).
         run: |
+          sudo podman build --build-arg IMAGE="$IMAGE" -t localhost/lindle-screenshot -f tests/Containerfile.screenshot tests
           mkdir -p output
-          sudo podman run --rm --privileged \
+          truncate -s 40G output/disk.raw
+          sudo podman run --rm --privileged --pid=host \
             --security-opt label=type:unconfined_t \
             --security-opt apparmor=unconfined \
-            -v /var/lib/containers/storage:/var/lib/containers/storage \
+            -v /dev:/dev \
+            -v /var/lib/containers:/var/lib/containers \
             -v ./output:/output \
-            -v ./disk_config/screenshot-vm.toml:/config.toml:ro \
-            "$BIB_IMAGE" \
-            build --type qcow2 --use-librepo=True --rootfs=btrfs \
-            "$IMAGE"
+            localhost/lindle-screenshot \
+            bootc install to-disk --generic-image --via-loopback --filesystem btrfs \
+            --wipe --skip-fetch-check /output/disk.raw
 
       - name: Install QEMU
         run: |
@@ -74,9 +75,8 @@ jobs:
 
       - name: Take screenshots
         run: |
-          disk="$(sudo find output -name '*.qcow2' | head -n 1)"
-          sudo chown "$(id -u):$(id -g)" "$disk"
-          tests/screenshots.sh "$disk" "$RUNNER_TEMP/screenshots"
+          sudo chown "$(id -u):$(id -g)" output/disk.raw
+          tests/screenshots.sh output/disk.raw "$RUNNER_TEMP/screenshots"
 
       - name: Upload screenshots
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
