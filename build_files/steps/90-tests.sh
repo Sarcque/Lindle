@@ -12,6 +12,9 @@ for f in /usr/share/flatpak/preinstall.d/*.preinstall; do
 done
 test -f /usr/share/flatpak/preinstall.d/org.onlyoffice.desktopeditors.preinstall
 test -f /usr/share/flatpak/preinstall.d/org.gimp.GIMP.preinstall
+rpm -q photocraft gridcraft
+test -f /usr/share/applications/ai.storyteller.photocraft.desktop
+test -f /usr/share/applications/ai.storyteller.gridcraft.desktop
 
 test -f /usr/share/color-schemes/LindleLight.colors
 test -f /usr/share/color-schemes/LindleDark.colors

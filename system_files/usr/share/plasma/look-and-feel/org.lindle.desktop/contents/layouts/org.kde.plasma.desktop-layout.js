@@ -18,7 +18,8 @@ for (let i = 0; i < allPanels.length; ++i) {
                 "preferred://browser",
                 "preferred://filemanager",
                 "applications:org.onlyoffice.desktopeditors.desktop",
-                "applications:org.gimp.GIMP.desktop",
+                "applications:ai.storyteller.gridcraft.desktop",
+                "applications:ai.storyteller.photocraft.desktop",
                 "applications:org.kde.discover.desktop"
             ]);
             widget.reloadConfig();
