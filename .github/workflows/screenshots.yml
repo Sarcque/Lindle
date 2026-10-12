@@ -50,14 +50,19 @@ jobs:
           sudo podman pull "$IMAGE"
 
       - name: Build VM disk
-        id: build
-        uses: osbuild/bootc-image-builder-action@8661cd3832544ad68c12dcde8681b13ab0f56a8d # main
-        with:
-          builder-image: ${{ env.BIB_IMAGE }}
-          config-file: ./disk_config/screenshot-vm.toml
-          image: ${{ env.IMAGE }}
-          types: qcow2
-          additional-args: --use-librepo=True --rootfs=btrfs
+        # Run bootc-image-builder directly: Ubuntu runners' AppArmor blocks the
+        # mounts osbuild needs unless the container runs apparmor=unconfined.
+        run: |
+          mkdir -p output
+          sudo podman run --rm --privileged \
+            --security-opt label=type:unconfined_t \
+            --security-opt apparmor=unconfined \
+            -v /var/lib/containers/storage:/var/lib/containers/storage \
+            -v ./output:/output \
+            -v ./disk_config/screenshot-vm.toml:/config.toml:ro \
+            "$BIB_IMAGE" \
+            build --type qcow2 --use-librepo=True --rootfs=btrfs \
+            "$IMAGE"
 
       - name: Install QEMU
         run: |
@@ -69,7 +74,7 @@ jobs:
 
       - name: Take screenshots
         run: |
-          disk="$(sudo find "${{ steps.build.outputs.output-directory }}" -name '*.qcow2' | head -n 1)"
+          disk="$(sudo find output -name '*.qcow2' | head -n 1)"
           sudo chown "$(id -u):$(id -g)" "$disk"
           tests/screenshots.sh "$disk" "$RUNNER_TEMP/screenshots"
 
