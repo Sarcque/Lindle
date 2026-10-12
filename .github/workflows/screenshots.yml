@@ -3,8 +3,8 @@ name: Screenshots
 
 # Boots the published image in a VM and saves screenshots to the
 # "screenshots" branch, so anyone can see what the current build looks like.
-# Pull requests that change the image build it here and attach the
-# screenshots to the run instead.
+# Pull requests that change the image build it here and publish to a
+# "screenshots-pr-<number>" branch instead.
 on:
   workflow_dispatch:
   pull_request:
@@ -97,7 +97,8 @@ jobs:
           path: ${{ runner.temp }}/screenshots
 
       - name: Publish to the screenshots branch
-        if: github.event_name != 'pull_request'
+        env:
+          BRANCH: ${{ github.event_name == 'pull_request' && format('screenshots-pr-{0}', github.event.pull_request.number) || 'screenshots' }}
         run: |
           cd "$RUNNER_TEMP/screenshots"
           {
@@ -117,4 +118,4 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -A
           git commit -q -m "Screenshots of ${{ github.sha }}"
-          git push -f "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" screenshots
+          git push -f "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" "HEAD:$BRANCH"
