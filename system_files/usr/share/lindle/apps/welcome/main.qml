@@ -52,7 +52,6 @@ ApplicationWindow {
         property string hint
         property string letter
         property string iconName: ""
-        property var tile: Theme.tileAppCenter
         hoverable: true
         implicitWidth: 168
         implicitHeight: 150
@@ -68,7 +67,6 @@ ApplicationWindow {
                 implicitHeight: 56
                 letter: choice.letter
                 iconName: choice.iconName
-                colors: choice.tile
             }
             Text {
                 Layout.fillWidth: true
@@ -193,9 +191,9 @@ ApplicationWindow {
                         Layout.alignment: Qt.AlignHCenter
                         Layout.topMargin: 16
                         spacing: 16
-                        Choice { title: "Wi-Fi"; hint: "Join a network"; letter: "W"; iconName: "network-wireless"; tile: Theme.tileAppCenter; onClicked: Open.go("lindle://settings/kcm_networkmanagement") }
-                        Choice { title: "Bluetooth"; hint: "Headphones, speakers"; letter: "B"; iconName: "preferences-system-bluetooth"; tile: Theme.tileFiles; onClicked: Open.go("lindle://settings/kcm_bluetooth") }
-                        Choice { title: "Printers"; hint: "Add a printer"; letter: "P"; iconName: "printer"; tile: Theme.tileWelcome; onClicked: Open.go("lindle://settings/kcm_printer_manager") }
+                        Choice { title: "Wi-Fi"; hint: "Join a network"; letter: "W"; iconName: "network-wireless"; onClicked: Open.go("lindle://settings/kcm_networkmanagement") }
+                        Choice { title: "Bluetooth"; hint: "Headphones, speakers"; letter: "B"; iconName: "preferences-system-bluetooth"; onClicked: Open.go("lindle://settings/kcm_bluetooth") }
+                        Choice { title: "Printers"; hint: "Add a printer"; letter: "P"; iconName: "printer"; onClicked: Open.go("lindle://settings/kcm_printer_manager") }
                     }
                 }
             }
@@ -211,10 +209,10 @@ ApplicationWindow {
                         Layout.alignment: Qt.AlignHCenter
                         Layout.topMargin: 16
                         spacing: 16
-                        Choice { title: "WordCraft"; hint: "Documents"; letter: "W"; tile: Theme.tileAppCenter; onClicked: Open.go("lindle://app/ai.storyteller.wordcraft") }
-                        Choice { title: "GridCraft"; hint: "Spreadsheets"; letter: "G"; tile: Theme.tileFiles; onClicked: Open.go("lindle://app/ai.storyteller.gridcraft") }
-                        Choice { title: "DeckCraft"; hint: "Presentations"; letter: "D"; tile: Theme.tileWelcome; onClicked: Open.go("lindle://app/ai.storyteller.deckcraft") }
-                        Choice { title: "PhotoCraft"; hint: "Photos"; letter: "P"; tile: Theme.tileTerminal; onClicked: Open.go("lindle://app/ai.storyteller.photocraft") }
+                        Choice { title: "WordCraft"; hint: "Documents"; letter: "W"; onClicked: Open.go("lindle://app/ai.storyteller.wordcraft") }
+                        Choice { title: "GridCraft"; hint: "Spreadsheets"; letter: "G"; onClicked: Open.go("lindle://app/ai.storyteller.gridcraft") }
+                        Choice { title: "DeckCraft"; hint: "Presentations"; letter: "D"; onClicked: Open.go("lindle://app/ai.storyteller.deckcraft") }
+                        Choice { title: "PhotoCraft"; hint: "Photos"; letter: "P"; onClicked: Open.go("lindle://app/ai.storyteller.photocraft") }
                     }
                     PillButton {
                         Layout.alignment: Qt.AlignHCenter

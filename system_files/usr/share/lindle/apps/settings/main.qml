@@ -17,26 +17,32 @@ ApplicationWindow {
     // Each group: a title and tiles. "kcm" is the System Settings module opened by lindle://settings/<kcm>.
     readonly property var groups: [
         { title: "Connect", items: [
-            { name: "Wi-Fi & Network", hint: "Connect to the internet", icon: "network-wireless", kcm: "kcm_networkmanagement", tile: Theme.tileAppCenter },
-            { name: "Bluetooth", hint: "Headphones, speakers, mice", icon: "preferences-system-bluetooth", kcm: "kcm_bluetooth", tile: Theme.tileAppCenter },
-            { name: "Printers & Scanners", hint: "Add and manage printers", icon: "printer", kcm: "kcm_printer_manager", tile: Theme.tileAppCenter },
-            { name: "Scan documents", hint: "Use a scanner", icon: "scanner", app: "org.kde.skanpage", tile: Theme.tileAppCenter },
-            { name: "Sound", hint: "Volume, speakers, microphone", icon: "audio-volume-high", kcm: "kcm_pulseaudio", tile: Theme.tileAppCenter }
+            { name: "Wi-Fi & Network", hint: "Connect to the internet", icon: "network-wireless", kcm: "kcm_networkmanagement" },
+            { name: "Bluetooth", hint: "Headphones, speakers, mice", icon: "preferences-system-bluetooth", kcm: "kcm_bluetooth" },
+            { name: "Printers & Scanners", hint: "Add and manage printers", icon: "printer", kcm: "kcm_printer_manager" },
+            { name: "Scan documents", hint: "Use a scanner", icon: "scanner", app: "org.kde.skanpage" },
+            { name: "Sound", hint: "Volume, speakers, microphone", icon: "audio-volume-high", kcm: "kcm_pulseaudio" }
         ]},
         { title: "Your computer", items: [
-            { name: "Displays", hint: "Resolution, scaling, night light", icon: "video-display", kcm: "kcm_kscreen", tile: Theme.tileFiles },
-            { name: "Appearance", hint: "Light or dark, colors, wallpaper", icon: "preferences-desktop-theme-global", kcm: "kcm_lookandfeel", tile: Theme.tileFiles },
-            { name: "Keyboard", hint: "Layouts and shortcuts", icon: "input-keyboard", kcm: "kcm_keyboard", tile: Theme.tileFiles },
-            { name: "Mouse & Touchpad", hint: "Pointer speed, scrolling", icon: "input-mouse", kcm: "kcm_mouse", tile: Theme.tileFiles },
-            { name: "Power", hint: "Battery, sleep and screen off", icon: "battery", kcm: "kcm_powerdevilprofilesconfig", tile: Theme.tileFiles }
+            { name: "Displays", hint: "Resolution, scaling, night light", icon: "video-display", kcm: "kcm_kscreen" },
+            { name: "Appearance", hint: "Light or dark, colors, wallpaper", icon: "preferences-desktop-theme-global", kcm: "kcm_lookandfeel" },
+            { name: "Keyboard", hint: "Layouts and shortcuts", icon: "input-keyboard", kcm: "kcm_keyboard" },
+            { name: "Mouse & Touchpad", hint: "Pointer speed, scrolling", icon: "input-mouse", kcm: "kcm_mouse" },
+            { name: "Power", hint: "Battery, sleep and screen off", icon: "battery", kcm: "kcm_powerdevilprofilesconfig" }
         ]},
         { title: "You", items: [
-            { name: "Users", hint: "Your account and password", icon: "preferences-system-users", kcm: "kcm_users", tile: Theme.tileWelcome },
-            { name: "Default apps", hint: "Which app opens what", icon: "preferences-desktop-default-applications", kcm: "kcm_componentchooser", tile: Theme.tileWelcome },
-            { name: "Updates", hint: "Keep Lindle and your apps current", icon: "system-software-update", store: "updates", tile: Theme.tileWelcome },
-            { name: "About Lindle", hint: "Version and hardware", icon: "help-about", kcm: "kcm_about-distro", tile: Theme.tileWelcome }
+            { name: "Users", hint: "Your account and password", icon: "preferences-system-users", kcm: "kcm_users" },
+            { name: "Default apps", hint: "Which app opens what", icon: "preferences-desktop-default-applications", kcm: "kcm_componentchooser" },
+            { name: "Updates", hint: "Keep Lindle and your apps current", icon: "system-software-update", store: "updates" },
+            { name: "About Lindle", hint: "Version and hardware", icon: "help-about", kcm: "kcm_about-distro" }
         ]}
     ]
+
+    // Columns of equal width that fill the window.
+    function columnWidth(columns, gap) {
+        var n = Math.max(1, Math.min(columns, Math.floor((scroll.availableWidth - 64 + gap) / (240 + gap))))
+        return (scroll.availableWidth - 64 - gap * (n - 1)) / n
+    }
 
     function openItem(item) {
         if (item.app)
@@ -125,7 +131,7 @@ ApplicationWindow {
                             delegate: Card {
                                 required property var modelData
                                 hoverable: true
-                                width: 268
+                                width: win.columnWidth(3, 12) - 0.5
                                 height: 76
                                 onClicked: win.openItem(modelData)
                                 Accessible.role: Accessible.Button
@@ -140,7 +146,6 @@ ApplicationWindow {
                                         implicitHeight: 48
                                         iconName: modelData.icon
                                         letter: modelData.name.charAt(0)
-                                        colors: modelData.tile
                                     }
                                     ColumnLayout {
                                         Layout.fillWidth: true

@@ -16,33 +16,44 @@ ApplicationWindow {
 
     // id is the Flathub app id; opening lindle://install/<id> shows it in the store.
     readonly property var featured: [
-        { id: "org.gimp.GIMP", name: "GIMP", line: "Edit photos like a pro", blurb: "The classic open source photo editor, with layers, masks and filters.", tile: Theme.tileAppCenter },
-        { id: "org.kde.krita", name: "Krita", line: "Paint and illustrate", blurb: "Digital painting for artists, with brushes that feel natural.", tile: Theme.tileWelcome },
-        { id: "org.kde.kdenlive", name: "Kdenlive", line: "Edit your videos", blurb: "A full video editor with a timeline, titles and effects.", tile: Theme.tileFiles }
+        { id: "org.gimp.GIMP", name: "GIMP", line: "Edit photos like a pro", blurb: "The classic open source photo editor, with layers, masks and filters." },
+        { id: "org.kde.krita", name: "Krita", line: "Paint and illustrate", blurb: "Digital painting for artists, with brushes that feel natural." },
+        { id: "org.kde.kdenlive", name: "Kdenlive", line: "Edit your videos", blurb: "A full video editor with a timeline, titles and effects." }
     ]
 
     readonly property var sections: [
         { title: "Work", apps: [
-            { id: "org.onlyoffice.desktopeditors", name: "ONLYOFFICE", line: "Word, Excel and PowerPoint files", tile: Theme.tileAppCenter },
-            { id: "org.libreoffice.LibreOffice", name: "LibreOffice", line: "A complete office suite", tile: Theme.tileFiles },
-            { id: "org.mozilla.Thunderbird", name: "Thunderbird", line: "Email and calendar", tile: Theme.tileWelcome },
-            { id: "org.kde.okular", name: "Okular", line: "Read, annotate and sign PDFs", tile: Theme.tileSettings },
-            { id: "com.bitwarden.desktop", name: "Bitwarden", line: "Passwords, kept safe", tile: Theme.tileAppCenter },
-            { id: "org.telegram.desktop", name: "Telegram", line: "Messages", tile: Theme.tileFiles }
+            { id: "org.onlyoffice.desktopeditors", name: "ONLYOFFICE", line: "Word, Excel and PowerPoint files" },
+            { id: "org.libreoffice.LibreOffice", name: "LibreOffice", line: "A complete office suite" },
+            { id: "org.mozilla.Thunderbird", name: "Thunderbird", line: "Email and calendar" },
+            { id: "org.kde.okular", name: "Okular", line: "Read, annotate and sign PDFs" },
+            { id: "com.bitwarden.desktop", name: "Bitwarden", line: "Passwords, kept safe" },
+            { id: "org.telegram.desktop", name: "Telegram", line: "Messages" }
         ]},
         { title: "Create", apps: [
-            { id: "org.inkscape.Inkscape", name: "Inkscape", line: "Vector drawing and logos", tile: Theme.tileWelcome },
-            { id: "org.blender.Blender", name: "Blender", line: "3D modeling and animation", tile: Theme.tileAppCenter },
-            { id: "org.audacityteam.Audacity", name: "Audacity", line: "Record and edit audio", tile: Theme.tileFiles },
-            { id: "com.obsproject.Studio", name: "OBS Studio", line: "Record and stream your screen", tile: Theme.tileTerminal }
+            { id: "org.inkscape.Inkscape", name: "Inkscape", line: "Vector drawing and logos" },
+            { id: "org.blender.Blender", name: "Blender", line: "3D modeling and animation" },
+            { id: "org.audacityteam.Audacity", name: "Audacity", line: "Record and edit audio" },
+            { id: "com.obsproject.Studio", name: "OBS Studio", line: "Record and stream your screen" }
         ]},
         { title: "Play and watch", apps: [
-            { id: "org.videolan.VLC", name: "VLC", line: "Plays just about anything", tile: Theme.tileWelcome },
-            { id: "com.valvesoftware.Steam", name: "Steam", line: "Games", tile: Theme.tileTerminal },
-            { id: "com.usebottles.bottles", name: "Bottles", line: "Run Windows apps", tile: Theme.tileAppCenter },
-            { id: "org.mozilla.firefox", name: "Firefox", line: "The web browser", tile: Theme.tileFiles }
+            { id: "org.videolan.VLC", name: "VLC", line: "Plays just about anything" },
+            { id: "com.valvesoftware.Steam", name: "Steam", line: "Games" },
+            { id: "com.usebottles.bottles", name: "Bottles", line: "Run Windows apps" },
+            { id: "org.mozilla.firefox", name: "Firefox", line: "The web browser" }
         ]}
     ]
+
+    // Real app icons come from Flathub; the tinted letter shows while loading or offline.
+    function iconUrl(id) {
+        return "https://dl.flathub.org/repo/appstream/x86_64/icons/128x128/" + id + ".png"
+    }
+
+    // Columns of equal width that fill the window.
+    function columnWidth(columns, gap) {
+        var n = Math.max(1, Math.min(columns, Math.floor((scroll.availableWidth - 64 + gap) / (280 + gap))))
+        return (scroll.availableWidth - 64 - gap * (n - 1)) / n
+    }
 
     function search() {
         if (searchField.text.length)
@@ -113,63 +124,56 @@ ApplicationWindow {
                 spacing: 16
                 Repeater {
                     model: win.featured
-                    delegate: Rectangle {
+                    delegate: Card {
                         required property var modelData
-                        width: Math.max(280, (scroll.availableWidth - 64 - 32) / 3)
-                        height: 200
-                        radius: Theme.radiusLarge
-                        gradient: Gradient {
-                            orientation: Gradient.Horizontal
-                            GradientStop { position: 0; color: modelData.tile[0] }
-                            GradientStop { position: 1; color: modelData.tile[1] }
-                        }
-                        HoverHandler { cursorShape: Qt.PointingHandCursor }
-                        TapHandler { onTapped: Open.go("lindle://install/" + modelData.id) }
+                        hoverable: true
+                        width: win.columnWidth(3, 16) - 0.5
+                        height: 190
+                        onClicked: Open.go("lindle://install/" + modelData.id)
                         Accessible.role: Accessible.Button
                         Accessible.name: modelData.name
 
-                        ColumnLayout {
+                        RowLayout {
                             anchors.fill: parent
                             anchors.margins: 22
-                            spacing: 6
-                            Text {
-                                text: modelData.line.toUpperCase()
-                                color: "#E6FFFFFF"
-                                font.family: Theme.fontFamily
-                                font.pixelSize: 11
-                                font.weight: Font.DemiBold
-                                font.letterSpacing: 1
+                            spacing: 18
+                            Glyph {
+                                Layout.alignment: Qt.AlignTop
+                                implicitWidth: 72
+                                implicitHeight: 72
+                                letter: modelData.name.charAt(0)
+                                source: win.iconUrl(modelData.id)
                             }
-                            Text {
-                                text: modelData.name
-                                color: "white"
-                                font.family: Theme.fontFamily
-                                font.pixelSize: 30
-                                font.weight: Font.DemiBold
-                            }
-                            Text {
+                            ColumnLayout {
                                 Layout.fillWidth: true
-                                text: modelData.blurb
-                                wrapMode: Text.WordWrap
-                                color: "#F2FFFFFF"
-                                font.family: Theme.fontFamily
-                                font.pixelSize: 14
-                            }
-                            Item { Layout.fillHeight: true }
-                            Rectangle {
-                                radius: height / 2
-                                color: "white"
-                                implicitWidth: getLabel.implicitWidth + 36
-                                implicitHeight: 34
+                                Layout.fillHeight: true
+                                spacing: 4
                                 Text {
-                                    id: getLabel
-                                    anchors.centerIn: parent
-                                    text: "Get"
-                                    color: modelData.tile[1]
+                                    text: modelData.line
+                                    color: Theme.link
                                     font.family: Theme.fontFamily
-                                    font.pixelSize: 14
+                                    font.pixelSize: 12
                                     font.weight: Font.DemiBold
                                 }
+                                Text {
+                                    text: modelData.name
+                                    color: Theme.text
+                                    font.family: Theme.fontFamily
+                                    font.pixelSize: 24
+                                    font.weight: Font.DemiBold
+                                }
+                                Text {
+                                    Layout.fillWidth: true
+                                    text: modelData.blurb
+                                    wrapMode: Text.WordWrap
+                                    maximumLineCount: 3
+                                    elide: Text.ElideRight
+                                    color: Theme.textMuted
+                                    font.family: Theme.fontFamily
+                                    font.pixelSize: 13
+                                }
+                                Item { Layout.fillHeight: true }
+                                GetButton {}
                             }
                         }
                     }
@@ -202,7 +206,7 @@ ApplicationWindow {
                             delegate: Card {
                                 required property var modelData
                                 hoverable: true
-                                width: 300
+                                width: win.columnWidth(3, 12) - 0.5
                                 height: 76
                                 onClicked: Open.go("lindle://install/" + modelData.id)
                                 Accessible.role: Accessible.Button
@@ -216,7 +220,7 @@ ApplicationWindow {
                                         implicitWidth: 48
                                         implicitHeight: 48
                                         letter: modelData.name.charAt(0)
-                                        colors: modelData.tile
+                                        source: win.iconUrl(modelData.id)
                                     }
                                     ColumnLayout {
                                         Layout.fillWidth: true
@@ -239,13 +243,7 @@ ApplicationWindow {
                                             font.pixelSize: 12
                                         }
                                     }
-                                    Text {
-                                        text: "Get"
-                                        color: Theme.accent
-                                        font.family: Theme.fontFamily
-                                        font.pixelSize: 13
-                                        font.weight: Font.DemiBold
-                                    }
+                                    GetButton {}
                                 }
                             }
                         }
