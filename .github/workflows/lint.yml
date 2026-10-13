@@ -26,6 +26,12 @@ jobs:
         run: |
           find design system_files -name '*.json' -print0 | xargs -0 -n1 python3 -m json.tool > /dev/null
 
+      - name: Check the QML apps load
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq qml-qt6 qt6-declarative-dev-tools qml6-module-qtquick qml6-module-qtquick-controls qml6-module-qtquick-layouts qml6-module-qtquick-templates qml6-module-qtquick-window
+          tests/qml-smoke.sh
+
       - name: Check color contrast
         run: |
           python3 design/generate.py --check
@@ -33,5 +39,5 @@ jobs:
       - name: Check generated color schemes and icons are up to date
         run: |
           python3 design/generate.py
-          git diff --exit-code -- system_files/usr/share/color-schemes system_files/usr/share/icons design/logo
-          test -z "$(git ls-files --others --exclude-standard system_files/usr/share/icons design/logo)"
+          git diff --exit-code -- system_files/usr/share/color-schemes system_files/usr/share/icons design/logo system_files/usr/share/lindle/qml system_files/usr/share/lindle/greeter system_files/usr/share/kde-settings/kde-profile/default/xdg/breezerc
+          test -z "$(git ls-files --others --exclude-standard system_files/usr/share/icons design/logo system_files/usr/share/lindle)"

@@ -36,6 +36,28 @@ test -f /usr/lib/plasmalogin/plasmalogin.conf.d/50-lindle.conf
 test -f /usr/share/plasma/plasma-welcome/intro-customization.desktop
 test -f /usr/share/plasma/plasma-welcome/extra-pages/10-apps.qml
 
+test -f /usr/share/plymouth/themes/lindle/lindle.plymouth
+test -f /usr/share/plymouth/themes/lindle/logo.png
+grep -q '^Theme=lindle' /etc/plymouth/plymouthd.conf
+test -f /usr/share/lindle/grub/lindle/theme.txt
+test -f /usr/share/sounds/Lindle/stereo/desktop-login.wav
+test -f /usr/share/lindle/greeter/kdeglobals
+test -f /usr/lib/tmpfiles.d/lindle-greeter.conf
+test -f /usr/share/kde-settings/kde-profile/default/xdg/breezerc
+for app in welcome app-center settings; do
+    test -f "/usr/share/lindle/apps/$app/main.qml"
+    test -f "/usr/share/applications/lindle-$app.desktop"
+done
+grep -q '^NoDisplay=true' /usr/share/applications/org.kde.discover.desktop
+bash -n /usr/bin/lindle-qml
+bash -n /usr/libexec/lindle/lindle-open
+qml_found=false
+for c in qml6 qml-qt6 /usr/lib64/qt6/bin/qml /usr/lib/qt6/bin/qml qml; do
+    command -v "$c" >/dev/null 2>&1 && qml_found=true
+done
+$qml_found
+systemctl is-enabled lindle-grub-theme.service
+
 # fc-match prints one short line, so grep -q cannot SIGPIPE the producer under pipefail.
 fc-match -f "%{family}\n" "Inter" | grep -qi "^Inter"
 

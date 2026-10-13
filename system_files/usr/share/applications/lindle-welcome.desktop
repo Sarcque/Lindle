@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=Application
+Name=Welcome to Lindle
+GenericName=Welcome
+Comment=A short tour: pick your look, connect devices and find your apps
+Exec=lindle-qml welcome
+Icon=lindle-welcome
+Categories=Qt;System;
+Keywords=welcome;tour;start;setup;
+StartupNotify=false
+Terminal=false
+StartupWMClass=lindle-welcome

@@ -116,12 +116,20 @@ Split into separate repos only when a part gets its own contributors (likely `de
 
 ## 8. Towards a complete OS identity
 
-Order of work after 0.1, each item generated from `design/tokens.json` where possible:
-1. Plymouth boot splash and GRUB/systemd-boot theme with the Lindle mark.
-2. Login screen (SDDM/plasmalogin) theme: logo, accent, blur.
-3. Window decorations and Plasma style that follow the tokens' radius and elevation.
-4. Sound theme and cursor theme.
-5. Lindle-owned apps: Welcome app, App Center front page, Settings landing page.
+Status of each piece, all generated from `design/tokens.json` where possible (`design/system.py`, `design/icons.py`):
+
+| Piece | Status |
+|---|---|
+| Boot splash (Plymouth) | Done: `lindle` script theme (mark, pulse, progress bar, disk password prompt), baked into the initramfs at build time. |
+| Boot menu (GRUB) | Done, applied on first boot by `lindle-grub-theme.service` through `/boot/grub2/custom.cfg`. Needs checking on real UEFI and BIOS machines. |
+| Login screen | Colors, accent, font and icons seeded for the login user (`/usr/share/lindle/greeter/kdeglobals`); wallpaper and blur come from Plasma Login. A logo on the login screen needs a custom greeter, not planned yet. |
+| Window shadows and animation | Done through Breeze settings (`breezerc`), tinted from the tokens. |
+| Window decoration shape and Plasma style (panel and widget SVGs) | Not done: radius from the tokens needs an Aurorae or custom decoration plus a Plasma theme. Next, to be checked against screenshots. |
+| Sounds | Done: "Lindle" sound theme, 14 synthesized chimes. |
+| Cursors | Not done: still Breeze. Needs a generated Xcursor theme. |
+| Welcome, App Center, Settings | Done as QML apps (`/usr/share/lindle/apps`, run by `lindle-qml`), sharing one theme with the system colors. Welcome does not replace Plasma's Welcome Center on first login yet. |
+
+Lindle's apps open the system through `lindle://` links (`/usr/libexec/lindle/lindle-open`, fixed list of actions). The App Center is a curated front page over Discover, which stays underneath as the install and update engine.
 
 ## 9. Things to decide early
 

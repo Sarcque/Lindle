@@ -1,0 +1,6 @@
+module Lindle
+singleton Theme 1.0 Theme.qml
+Glyph 1.0 Glyph.qml
+Card 1.0 Card.qml
+PillButton 1.0 PillButton.qml
+singleton Open 1.0 Open.qml

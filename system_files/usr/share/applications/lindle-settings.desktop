@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=Application
+Name=Settings
+GenericName=Settings
+Comment=Wi-Fi, Bluetooth, printers, displays and more
+Exec=lindle-qml settings
+Icon=preferences-system
+Categories=Qt;Settings;
+Keywords=settings;preferences;wifi;bluetooth;printer;
+StartupNotify=false
+Terminal=false
+StartupWMClass=lindle-settings

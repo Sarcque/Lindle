@@ -1,0 +1,21 @@
+#!/bin/bash
+# Runs one of Lindle's own QML apps: lindle-qml welcome|app-center|settings
+# The app id is the process name, so the taskbar groups windows with the right .desktop file.
+
+app="${1:?usage: lindle-qml <app>}"
+shift
+file="/usr/share/lindle/apps/$app/main.qml"
+[[ -f "$file" ]] || { echo "lindle-qml: no such app: $app" >&2; exit 1; }
+
+qml=""
+for candidate in qml6 qml-qt6 /usr/lib64/qt6/bin/qml /usr/lib/qt6/bin/qml qml; do
+    if command -v "$candidate" >/dev/null 2>&1; then
+        qml="$(command -v "$candidate")"
+        break
+    fi
+done
+[[ -n "$qml" ]] || { echo "lindle-qml: the Qt QML runtime is not installed" >&2; exit 1; }
+
+# Plain Qt Quick Controls with Lindle's own look (see /usr/share/lindle/qml/Lindle).
+export QT_QUICK_CONTROLS_STYLE=Basic
+exec -a "lindle-$app" "$qml" "$file" "$@"

@@ -1,0 +1,60 @@
+#!/bin/bash
+# Handles lindle:// links from Lindle's apps (and nothing else): opens a settings
+# page, the store, or an app. Only a fixed set of actions is allowed, because any
+# web page can open a lindle:// link.
+#
+#   lindle://settings/<kcm_module>      lindle://settings/all
+#   lindle://settings-search/<text>     lindle://store/{home,updates,search/<text>}
+#   lindle://install/<flathub app id>   lindle://look/{light,dark}
+#   lindle://app/<app id>
+
+url="${1:-}"
+rest="${url#lindle://}"
+action="${rest%%/*}"
+arg="${rest#*/}"
+[[ "$rest" == */* ]] || arg=""
+arg="${arg%/}"
+
+urldecode() { printf '%b' "${1//%/\\x}"; }
+
+case "$action" in
+    settings)
+        if [[ "$arg" == all || -z "$arg" ]]; then
+            exec systemsettings
+        elif [[ "$arg" =~ ^kcm_[a-zA-Z0-9_-]+$ ]]; then
+            if command -v kcmshell6 >/dev/null; then
+                exec kcmshell6 "$arg"
+            fi
+            exec systemsettings "$arg"
+        fi
+        ;;
+    settings-search)
+        exec systemsettings
+        ;;
+    store)
+        case "$arg" in
+            updates) exec plasma-discover --mode update ;;
+            search/*) exec plasma-discover --search "$(urldecode "${arg#search/}")" ;;
+            *) exec plasma-discover ;;
+        esac
+        ;;
+    install)
+        if [[ "$arg" =~ ^[a-zA-Z0-9._-]+$ ]]; then
+            exec plasma-discover --application "$arg.desktop"
+        fi
+        ;;
+    look)
+        case "$arg" in
+            light) exec plasma-apply-lookandfeel -a org.lindle.desktop ;;
+            dark) exec plasma-apply-lookandfeel -a org.lindle.desktop.dark ;;
+        esac
+        ;;
+    app)
+        if [[ "$arg" =~ ^(ai\.storyteller\.[a-z]+|lindle-[a-z-]+)$ ]]; then
+            exec gtk-launch "$arg"
+        fi
+        ;;
+esac
+
+echo "lindle-open: ignoring $url" >&2
+exit 1

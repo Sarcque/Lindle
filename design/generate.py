@@ -13,6 +13,7 @@ import sys
 from pathlib import Path
 
 import icons
+import system
 
 ROOT = Path(__file__).resolve().parent.parent
 TOKENS = ROOT / "design" / "tokens.json"
@@ -268,6 +269,7 @@ def main():
         return
     write_schemes(tokens)
     icons.write_icons(tokens)
+    system.write_system(tokens)
     write_wallpapers(tokens)
     write_previews(tokens)
 

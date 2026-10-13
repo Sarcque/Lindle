@@ -8,7 +8,7 @@ Lindle is a modern, open source Linux desktop for people coming from macOS and W
 
 - **Base:** Fedora KDE (Plasma 6) as an atomic, image-based OS, built on [Universal Blue](https://universal-blue.org/)'s `kinoite-main` image with [bootc](https://github.com/bootc-dev/bootc). Codecs and Flathub come from the base.
 - **Look:** Lindle light and dark color schemes, Inter and JetBrains Mono fonts, Lindle wallpaper, floating taskbar. All colors come from [design/tokens.json](design/tokens.json) and are checked for WCAG contrast in CI.
-- **Own identity:** the Lindle icon theme (rounded gradient app tiles, soft blue folders, the Lindle logo in the start menu, About page and login), generated from the same tokens as the colors. Discover is shipped as **App Center**, with its own name and icon, Flathub only.
+- **Own identity:** the Lindle icon theme (rounded gradient app tiles, soft blue folders, the Lindle logo in the start menu, About page and login), generated from the same tokens as the colors. A Lindle boot splash and boot menu theme, a "Lindle" sound theme, and Lindle's own **Welcome**, **App Center** (a curated front page over Discover, Flathub only) and **Settings** (a friendly front page for Wi-Fi, Bluetooth, printers, displays and more) apps.
 - **Storytold Craft apps, built into the OS and pinned to the taskbar:** [WordCraft](https://github.com/storytold/wordcraft) (Word), [GridCraft](https://github.com/storytold/gridcraft) (Excel), [DeckCraft](https://github.com/storytold/deckcraft) (PowerPoint) and [PhotoCraft](https://github.com/storytold/photocraft) (Photoshop), from each project's latest release.
 - **Apps, installed from Flathub on first boot:** ONLYOFFICE (as a fallback for complex Office files), GIMP, Inkscape, Krita, Firefox, Thunderbird, VLC, Bottles (Windows apps).
 - **Updates:** the OS downloads updates in the background and applies them on the next restart; apps update in the background too. A bad OS update can be undone by choosing the previous entry at boot.
@@ -23,6 +23,8 @@ system_files/            Files copied over the OS (themes, KDE defaults, service
 design/tokens.json       Colors, type, spacing: single source of truth for the theme
 design/generate.py       Turns tokens into KDE color schemes and wallpapers
 design/icons.py          Turns tokens into the Lindle icon theme and logo
+design/system.py         Turns tokens into the QML theme, boot splash, GRUB theme, sounds and login/window settings
+tests/qml-smoke.sh       Loads Lindle's QML apps headlessly and fails on errors
 disk_config/             Installer ISO and VM disk settings
 lindle.env               Image name and metadata
 Justfile                 Local build commands

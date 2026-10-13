@@ -1,6 +1,7 @@
 #!/bin/bash
-# Lindle's App Center is KDE Discover (Flathub only) under its own name and icon.
-# Only the launcher entry changes, so Discover keeps updating with the OS.
+# Lindle's App Center front page is its own app (lindle-app-center). Discover
+# stays underneath as the engine for installing and updating apps: it gets
+# Lindle's name and icon, and is hidden from menus so there is one "App Center".
 
 set -ouex pipefail
 
@@ -10,7 +11,7 @@ entry=/usr/share/applications/org.kde.discover.desktop
 # Discover name, its translations and icon, then add Lindle's.
 sed -i \
     -e '/^\[Desktop Entry\]/,/^\[/{/^\(Name\|GenericName\|Comment\|Icon\)\(\[[^]]*\]\)\?=/d}' \
-    -e '/^\[Desktop Entry\]/a Name=App Center\nGenericName=App Store\nComment=Find, install and update apps\nIcon=lindle-app-center' \
+    -e '/^\[Desktop Entry\]/a Name=App Center\nGenericName=App Store\nComment=Find, install and update apps\nIcon=lindle-app-center\nNoDisplay=true' \
     "$entry"
 
 # The OS-update notifier shows up as a second "Discover" entry in some menus.

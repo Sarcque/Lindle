@@ -26,7 +26,7 @@ for (let i = 0; i < allPanels.length; ++i) {
                 "applications:ai.storyteller.gridcraft.desktop",
                 "applications:ai.storyteller.deckcraft.desktop",
                 "applications:ai.storyteller.photocraft.desktop",
-                "applications:org.kde.discover.desktop"
+                "applications:lindle-app-center.desktop"
             ]);
             widget.reloadConfig();
         }
