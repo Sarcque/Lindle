@@ -58,6 +58,13 @@ done
 $qml_found
 systemctl is-enabled lindle-grub-theme.service
 
+rpm -q bluez bluedevil cups cups-filters plasma-print-manager sane-airscan skanpage fwupd
+test -f /usr/share/applications/org.kde.skanpage.desktop
+systemctl is-enabled bluetooth.service
+systemctl is-enabled cups.socket
+systemctl is-enabled avahi-daemon.service
+systemctl is-enabled fwupd-refresh.timer
+
 # fc-match prints one short line, so grep -q cannot SIGPIPE the producer under pipefail.
 fc-match -f "%{family}\n" "Inter" | grep -qi "^Inter"
 

@@ -20,6 +20,7 @@ ApplicationWindow {
             { name: "Wi-Fi & Network", hint: "Connect to the internet", icon: "network-wireless", kcm: "kcm_networkmanagement", tile: Theme.tileAppCenter },
             { name: "Bluetooth", hint: "Headphones, speakers, mice", icon: "preferences-system-bluetooth", kcm: "kcm_bluetooth", tile: Theme.tileAppCenter },
             { name: "Printers & Scanners", hint: "Add and manage printers", icon: "printer", kcm: "kcm_printer_manager", tile: Theme.tileAppCenter },
+            { name: "Scan documents", hint: "Use a scanner", icon: "scanner", app: "org.kde.skanpage", tile: Theme.tileAppCenter },
             { name: "Sound", hint: "Volume, speakers, microphone", icon: "audio-volume-high", kcm: "kcm_pulseaudio", tile: Theme.tileAppCenter }
         ]},
         { title: "Your computer", items: [
@@ -38,7 +39,10 @@ ApplicationWindow {
     ]
 
     function openItem(item) {
-        Open.go(item.store ? "lindle://store/" + item.store : "lindle://settings/" + item.kcm)
+        if (item.app)
+            Open.go("lindle://app/" + item.app)
+        else
+            Open.go(item.store ? "lindle://store/" + item.store : "lindle://settings/" + item.kcm)
     }
 
     ScrollView {

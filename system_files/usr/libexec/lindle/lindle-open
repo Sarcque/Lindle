@@ -6,7 +6,7 @@
 #   lindle://settings/<kcm_module>      lindle://settings/all
 #   lindle://settings-search/<text>     lindle://store/{home,updates,search/<text>}
 #   lindle://install/<flathub app id>   lindle://look/{light,dark}
-#   lindle://app/<app id>
+#   lindle://app/<app id>   (Craft apps, Lindle apps, the scanner app)
 
 url="${1:-}"
 rest="${url#lindle://}"
@@ -50,7 +50,7 @@ case "$action" in
         esac
         ;;
     app)
-        if [[ "$arg" =~ ^(ai\.storyteller\.[a-z]+|lindle-[a-z-]+)$ ]]; then
+        if [[ "$arg" =~ ^(ai\.storyteller\.[a-z]+|lindle-[a-z-]+|org\.kde\.skanpage)$ ]]; then
             exec gtk-launch "$arg"
         fi
         ;;
