@@ -1,6 +1,6 @@
 #!/bin/bash
 # Boot a Lindle VM disk in QEMU and save screenshots of the login screen, the
-# desktop, the start menu and the preinstalled apps.
+# Welcome Center, the desktop, the start menu and the preinstalled apps.
 #
 #   tests/screenshots.sh <disk.raw> <output-dir>
 #
@@ -47,6 +47,7 @@ type_text() {
         case "$ch" in
             " ") monitor "sendkey spc" ;;
             "-") monitor "sendkey minus" ;;
+            ".") monitor "sendkey dot" ;;
             *) monitor "sendkey $ch" ;;
         esac
         sleep 0.1
@@ -62,17 +63,21 @@ shot 01-login
 type_text lindle
 monitor "sendkey ret"
 sleep 120
-shot 02-desktop
+# Welcome Center opens by itself on the first login.
+shot 02-welcome
+monitor "sendkey alt-f4"
+sleep 5
+shot 03-desktop
 
 # Start menu
 monitor "sendkey meta_l"
 sleep 5
-shot 03-start-menu
+shot 04-start-menu
 monitor "sendkey esc"
 sleep 3
 
 open_app() {
-    # KRunner (Alt+Space), type the app name, Enter.
+    # KRunner (Alt+Space), type the app name or command, Enter.
     monitor "sendkey alt-spc"
     sleep 3
     type_text "$1"
@@ -84,6 +89,9 @@ open_app() {
     sleep 3
 }
 
-open_app photocraft 04-photocraft 30
-open_app gridcraft 05-gridcraft 30
-open_app "system settings" 06-settings 20
+open_app "plasma-welcome --pages 10-apps.qml" 05-welcome-apps 15
+open_app "plasma-welcome --pages 20-switching.qml" 06-welcome-switching 15
+open_app wordcraft 07-wordcraft 30
+open_app gridcraft 08-gridcraft 30
+open_app photocraft 09-photocraft 30
+open_app "system settings" 10-settings 20

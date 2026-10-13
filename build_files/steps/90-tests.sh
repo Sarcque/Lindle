@@ -20,9 +20,14 @@ done
 test -f /usr/share/color-schemes/LindleLight.colors
 test -f /usr/share/color-schemes/LindleDark.colors
 test -f /usr/share/plasma/look-and-feel/org.lindle.desktop/metadata.json
+test -f /usr/share/plasma/look-and-feel/org.lindle.desktop.dark/metadata.json
 test -f /usr/share/wallpapers/Lindle/contents/images/3840x2160.png
 test -f /usr/share/wallpapers/Lindle/contents/images_dark/3840x2160.png
 grep -q 'LookAndFeelPackage=org.lindle.desktop' /usr/share/kde-settings/kde-profile/default/xdg/kdeglobals
+[[ "$(readlink /usr/share/wallpapers/Default)" == Lindle ]]
+test -f /usr/lib/plasmalogin/plasmalogin.conf.d/50-lindle.conf
+test -f /usr/share/plasma/plasma-welcome/intro-customization.desktop
+test -f /usr/share/plasma/plasma-welcome/extra-pages/10-apps.qml
 
 # fc-match prints one short line, so grep -q cannot SIGPIPE the producer under pipefail.
 fc-match -f "%{family}\n" "Inter" | grep -qi "^Inter"

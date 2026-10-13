@@ -1,5 +1,7 @@
 [KDE]
 LookAndFeelPackage=org.lindle.desktop
+DefaultLightLookAndFeel=org.lindle.desktop
+DefaultDarkLookAndFeel=org.lindle.desktop.dark
 SingleClick=false
 widgetStyle=Breeze
 
