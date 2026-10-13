@@ -10,38 +10,38 @@
   <rect id="hint-stretch-borders" x="0" y="0" width="1" height="1" fill="#ff6600"/>
   <g id="top" transform="translate(16,0)">
     <rect width="32" height="16" class="ColorScheme-Background" fill="currentColor" opacity="1"/>
-    <path d="M0,0.5 H32" class="ColorScheme-Text" fill="none" stroke="currentColor" stroke-width="1" stroke-opacity="0.16"/>
+    <rect width="32" height="1" class="ColorScheme-Text" fill="currentColor" fill-opacity="0.16"/>
   </g>
   <g id="bottom" transform="translate(16,48)">
     <rect width="32" height="16" class="ColorScheme-Background" fill="currentColor" opacity="1"/>
-    <path d="M0,15.5 H32" class="ColorScheme-Text" fill="none" stroke="currentColor" stroke-width="1" stroke-opacity="0.16"/>
+    <rect y="15" width="32" height="1" class="ColorScheme-Text" fill="currentColor" fill-opacity="0.16"/>
   </g>
   <g id="left" transform="translate(0,16)">
     <rect width="16" height="32" class="ColorScheme-Background" fill="currentColor" opacity="1"/>
-    <path d="M0.5,0 V32" class="ColorScheme-Text" fill="none" stroke="currentColor" stroke-width="1" stroke-opacity="0.16"/>
+    <rect width="1" height="32" class="ColorScheme-Text" fill="currentColor" fill-opacity="0.16"/>
   </g>
   <g id="right" transform="translate(48,16)">
     <rect width="16" height="32" class="ColorScheme-Background" fill="currentColor" opacity="1"/>
-    <path d="M15.5,0 V32" class="ColorScheme-Text" fill="none" stroke="currentColor" stroke-width="1" stroke-opacity="0.16"/>
+    <rect x="15" width="1" height="32" class="ColorScheme-Text" fill="currentColor" fill-opacity="0.16"/>
   </g>
   <g id="center" transform="translate(16,16)">
     <rect width="32" height="32" class="ColorScheme-Background" fill="currentColor" opacity="1"/>
   </g>
   <g id="topleft" transform="translate(0,0)">
     <path d="M0,16 A16,16 0 0 1 16,0 V16 Z" class="ColorScheme-Background" fill="currentColor" opacity="1"/>
-    <path d="M0.5,16 V16 A15.5,15.5 0 0 1 16,0.5" class="ColorScheme-Text" fill="none" stroke="currentColor" stroke-width="1" stroke-opacity="0.16"/>
+    <path d="M0,16 A16,16 0 0 1 16,0 V1 A15,15 0 0 0 1,16 Z" class="ColorScheme-Text" fill="currentColor" fill-opacity="0.16"/>
   </g>
   <g id="topright" transform="translate(48,0)">
     <path d="M0,0 A16,16 0 0 1 16,16 H0 Z" class="ColorScheme-Background" fill="currentColor" opacity="1"/>
-    <path d="M0,0.5 A15.5,15.5 0 0 1 15.5,16" class="ColorScheme-Text" fill="none" stroke="currentColor" stroke-width="1" stroke-opacity="0.16"/>
+    <path d="M0,0 A16,16 0 0 1 16,16 H15 A15,15 0 0 0 0,1 Z" class="ColorScheme-Text" fill="currentColor" fill-opacity="0.16"/>
   </g>
   <g id="bottomleft" transform="translate(0,48)">
     <path d="M0,0 H16 V16 A16,16 0 0 1 0,0 Z" class="ColorScheme-Background" fill="currentColor" opacity="1"/>
-    <path d="M0.5,0 V0 A15.5,15.5 0 0 0 16,15.5" class="ColorScheme-Text" fill="none" stroke="currentColor" stroke-width="1" stroke-opacity="0.16"/>
+    <path d="M16,16 A16,16 0 0 1 0,0 H1 A15,15 0 0 0 16,15 Z" class="ColorScheme-Text" fill="currentColor" fill-opacity="0.16"/>
   </g>
   <g id="bottomright" transform="translate(48,48)">
     <path d="M16,0 A16,16 0 0 1 0,16 V0 Z" class="ColorScheme-Background" fill="currentColor" opacity="1"/>
-    <path d="M15.5,0 A15.5,15.5 0 0 1 0,15.5" class="ColorScheme-Text" fill="none" stroke="currentColor" stroke-width="1" stroke-opacity="0.16"/>
+    <path d="M16,0 A16,16 0 0 1 0,16 V15 A15,15 0 0 0 15,0 Z" class="ColorScheme-Text" fill="currentColor" fill-opacity="0.16"/>
   </g>
   <rect id="hint-top-margin" x="32" y="16" width="4" height="6" fill="#ff00ff"/>
   <rect id="hint-bottom-margin" x="32" y="58" width="4" height="6" fill="#ff00ff"/>

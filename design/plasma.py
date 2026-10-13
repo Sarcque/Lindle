@@ -62,19 +62,23 @@ def corner_fill(name, r):
 
 
 def corner_border(name, r):
-    """Hairline along the outer arc of a corner cell."""
-    h = r - 0.5
+    """Hairline along the outer arc of a corner cell, as a filled ring segment.
+
+    Filled shapes instead of strokes: Plasma sizes each cell from the element's bounds, and
+    a stroke's caps would make the bounds a few pixels too large and leave holes next to the corners.
+    """
+    i = r - 1
     paths = {
-        "topleft": f"M0.5,{r} V{r} A{h},{h} 0 0 1 {r},0.5",
-        "topright": f"M0,0.5 A{h},{h} 0 0 1 {r - 0.5},{r}",
-        "bottomleft": f"M0.5,0 V0 A{h},{h} 0 0 0 {r},{r - 0.5}",
-        "bottomright": f"M{r - 0.5},0 A{h},{h} 0 0 1 0,{r - 0.5}",
+        "topleft": f"M0,{r} A{r},{r} 0 0 1 {r},0 V1 A{i},{i} 0 0 0 1,{r} Z",
+        "topright": f"M0,0 A{r},{r} 0 0 1 {r},{r} H{i} A{i},{i} 0 0 0 0,1 Z",
+        "bottomleft": f"M{r},{r} A{r},{r} 0 0 1 0,0 H1 A{i},{i} 0 0 0 {r},{i} Z",
+        "bottomright": f"M{r},0 A{r},{r} 0 0 1 0,{r} V{i} A{i},{i} 0 0 0 {i},0 Z",
     }
     return paths[name]
 
 
 def border_attrs():
-    return 'class="ColorScheme-Text" fill="none" stroke="currentColor" stroke-width="1" stroke-opacity="0.16"'
+    return 'class="ColorScheme-Text" fill="currentColor" fill-opacity="0.16"'
 
 
 def cell(cid, x, y, w, h, body):
@@ -88,10 +92,10 @@ def main_cells(r, opacity, prefix_ids=("",)):
     t = TILE
     # (id, x, y, w, h, fill element, border element)
     edges = {
-        "top": (r, 0, t, r, f'<rect width="{t}" height="{r}" {fill}/>', f'<path d="M0,0.5 H{t}" {border_attrs()}/>'),
-        "bottom": (r, r + t, t, r, f'<rect width="{t}" height="{r}" {fill}/>', f'<path d="M0,{r - 0.5} H{t}" {border_attrs()}/>'),
-        "left": (0, r, r, t, f'<rect width="{r}" height="{t}" {fill}/>', f'<path d="M0.5,0 V{t}" {border_attrs()}/>'),
-        "right": (r + t, r, r, t, f'<rect width="{r}" height="{t}" {fill}/>', f'<path d="M{r - 0.5},0 V{t}" {border_attrs()}/>'),
+        "top": (r, 0, t, r, f'<rect width="{t}" height="{r}" {fill}/>', f'<rect width="{t}" height="1" {border_attrs()}/>'),
+        "bottom": (r, r + t, t, r, f'<rect width="{t}" height="{r}" {fill}/>', f'<rect y="{r - 1}" width="{t}" height="1" {border_attrs()}/>'),
+        "left": (0, r, r, t, f'<rect width="{r}" height="{t}" {fill}/>', f'<rect width="1" height="{t}" {border_attrs()}/>'),
+        "right": (r + t, r, r, t, f'<rect width="{r}" height="{t}" {fill}/>', f'<rect x="{r - 1}" width="1" height="{t}" {border_attrs()}/>'),
         "center": (r, r, t, t, f'<rect width="{t}" height="{t}" {fill}/>', ""),
     }
     for cid, (x, y, w, h, f, b) in edges.items():
