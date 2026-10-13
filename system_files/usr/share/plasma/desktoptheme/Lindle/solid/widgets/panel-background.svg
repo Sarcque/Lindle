@@ -15,6 +15,7 @@
     <radialGradient id="g-bl" gradientUnits="userSpaceOnUse" cx="34" cy="138" r="34"><stop offset="0" stop-color="#000" stop-opacity="0"/><stop offset="0.4701" stop-color="#000" stop-opacity="0"/><stop offset="0.4706" stop-color="#000" stop-opacity="0.3"/><stop offset="0.5765" stop-color="#000" stop-opacity="0.186"/><stop offset="0.7088" stop-color="#000" stop-opacity="0.084"/><stop offset="0.8412" stop-color="#000" stop-opacity="0.027"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
     <radialGradient id="g-br" gradientUnits="userSpaceOnUse" cx="66" cy="138" r="34"><stop offset="0" stop-color="#000" stop-opacity="0"/><stop offset="0.4701" stop-color="#000" stop-opacity="0"/><stop offset="0.4706" stop-color="#000" stop-opacity="0.3"/><stop offset="0.5765" stop-color="#000" stop-opacity="0.186"/><stop offset="0.7088" stop-color="#000" stop-opacity="0.084"/><stop offset="0.8412" stop-color="#000" stop-opacity="0.027"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
   </defs>
+  <rect id="hint-stretch-borders" x="0" y="0" width="1" height="1" fill="#ff6600"/>
   <g id="top" transform="translate(16,0)">
     <rect width="32" height="16" class="ColorScheme-Background" fill="currentColor" opacity="1"/>
     <path d="M0,0.5 H32" class="ColorScheme-Text" fill="none" stroke="currentColor" stroke-width="1" stroke-opacity="0.16"/>
