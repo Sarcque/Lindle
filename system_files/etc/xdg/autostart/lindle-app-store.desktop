@@ -2,7 +2,7 @@
 Type=Application
 Name=Lindle App Store (background service)
 Comment=Keeps the app store ready so it opens instantly on its front page
-Exec=sh -c 'flatpak info io.github.kolunmi.Bazaar >/dev/null 2>&1 && exec flatpak run --command=bazaar-daemon io.github.kolunmi.Bazaar --no-window'
+Exec=/usr/libexec/lindle-app-store-daemon
 NoDisplay=true
 OnlyShowIn=KDE;
 X-KDE-autostart-phase=2

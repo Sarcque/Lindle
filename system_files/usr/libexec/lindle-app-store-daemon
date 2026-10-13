@@ -1,0 +1,5 @@
+#!/bin/sh
+# Started at login: runs the app store (Bazaar) in the background, so it opens
+# instantly on Lindle's front page. Does nothing until Bazaar is installed.
+flatpak info io.github.kolunmi.Bazaar >/dev/null 2>&1 || exit 0
+exec flatpak run --command=bazaar-daemon io.github.kolunmi.Bazaar --no-window
