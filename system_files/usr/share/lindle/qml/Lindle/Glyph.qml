@@ -1,5 +1,4 @@
 import QtQuick
-import QtQuick.Controls
 
 // An app or setting icon. Calm by default: a soft accent-tinted square with the
 // icon (by theme name) or a letter. With "source" it shows the real app icon and
@@ -38,18 +37,13 @@ Rectangle {
         smooth: true
     }
 
-    Button {
+    Icon {
         anchors.centerIn: parent
         visible: glyph.iconName !== "" && appIcon.status !== Image.Ready
-        flat: true
-        enabled: false
-        padding: 0
-        display: AbstractButton.IconOnly
-        icon.name: glyph.iconName
-        icon.color: glyph.colors ? "white" : Theme.accent
-        icon.width: glyph.width * 0.5
-        icon.height: glyph.width * 0.5
-        background: null
+        name: glyph.iconName
+        color: glyph.colors ? "white" : Theme.accent
+        width: glyph.width * 0.5
+        height: width
     }
     Text {
         anchors.centerIn: parent

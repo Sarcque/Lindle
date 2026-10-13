@@ -13,6 +13,20 @@ have_qml() {
 }
 have_qml || dnf5 install -y qt6-qtdeclarative-devel
 
+# One copy of the qml tool per app: Qt uses the executable's name as the window's
+# app id, which has to match the .desktop file for the taskbar icon and grouping.
+qml_bin=""
+for c in qml6 qml-qt6 /usr/lib64/qt6/bin/qml /usr/lib/qt6/bin/qml qml; do
+    if command -v "$c" >/dev/null 2>&1; then
+        qml_bin="$(readlink -f "$(command -v "$c")")"
+        break
+    fi
+done
+mkdir -p /usr/libexec/lindle
+for app in welcome app-center settings; do
+    cp -f "$qml_bin" "/usr/libexec/lindle/lindle-$app"
+done
+
 # lindle:// links open settings pages, the store and apps.
 update-desktop-database /usr/share/applications
 

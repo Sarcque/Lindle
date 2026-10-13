@@ -7,8 +7,16 @@ shift
 file="/usr/share/lindle/apps/$app/main.qml"
 [[ -f "$file" ]] || { echo "lindle-qml: no such app: $app" >&2; exit 1; }
 
+# Qt names the window after the executable, and the desktop file has to match that name
+# for the taskbar to show the right icon, so each app has its own copy of the qml tool
+# (made at image build time, see build_files/steps/50-boot.sh).
+own="/usr/libexec/lindle/lindle-$app"
 qml=""
+if [[ -x "$own" ]]; then
+    qml="$own"
+fi
 for candidate in qml6 qml-qt6 /usr/lib64/qt6/bin/qml /usr/lib/qt6/bin/qml qml; do
+    [[ -n "$qml" ]] && break
     if command -v "$candidate" >/dev/null 2>&1; then
         qml="$(command -v "$candidate")"
         break

@@ -5,3 +5,4 @@ Card 1.0 Card.qml
 PillButton 1.0 PillButton.qml
 singleton Open 1.0 Open.qml
 GetButton 1.0 GetButton.qml
+Icon 1.0 Icon.qml

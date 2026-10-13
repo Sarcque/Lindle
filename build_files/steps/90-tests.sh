@@ -49,6 +49,9 @@ for app in welcome app-center settings; do
     test -f "/usr/share/applications/lindle-$app.desktop"
 done
 grep -q '^NoDisplay=true' /usr/share/applications/org.kde.discover.desktop
+for app in welcome app-center settings; do
+    test -x "/usr/libexec/lindle/lindle-$app"
+done
 bash -n /usr/bin/lindle-qml
 bash -n /usr/libexec/lindle/lindle-open
 qml_found=false

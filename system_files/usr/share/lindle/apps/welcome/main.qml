@@ -191,8 +191,8 @@ ApplicationWindow {
                         Layout.alignment: Qt.AlignHCenter
                         Layout.topMargin: 16
                         spacing: 16
-                        Choice { title: "Wi-Fi"; hint: "Join a network"; letter: "W"; iconName: "network-wireless"; onClicked: Open.go("lindle://settings/kcm_networkmanagement") }
-                        Choice { title: "Bluetooth"; hint: "Headphones, speakers"; letter: "B"; iconName: "preferences-system-bluetooth"; onClicked: Open.go("lindle://settings/kcm_bluetooth") }
+                        Choice { title: "Wi-Fi"; hint: "Join a network"; letter: "W"; iconName: "wifi"; onClicked: Open.go("lindle://settings/kcm_networkmanagement") }
+                        Choice { title: "Bluetooth"; hint: "Headphones, speakers"; letter: "B"; iconName: "bluetooth"; onClicked: Open.go("lindle://settings/kcm_bluetooth") }
                         Choice { title: "Printers"; hint: "Add a printer"; letter: "P"; iconName: "printer"; onClicked: Open.go("lindle://settings/kcm_printer_manager") }
                     }
                 }

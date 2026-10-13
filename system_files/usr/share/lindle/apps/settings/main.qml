@@ -17,24 +17,24 @@ ApplicationWindow {
     // Each group: a title and tiles. "kcm" is the System Settings module opened by lindle://settings/<kcm>.
     readonly property var groups: [
         { title: "Connect", items: [
-            { name: "Wi-Fi & Network", hint: "Connect to the internet", icon: "network-wireless", kcm: "kcm_networkmanagement" },
-            { name: "Bluetooth", hint: "Headphones, speakers, mice", icon: "preferences-system-bluetooth", kcm: "kcm_bluetooth" },
+            { name: "Wi-Fi & Network", hint: "Connect to the internet", icon: "wifi", kcm: "kcm_networkmanagement" },
+            { name: "Bluetooth", hint: "Headphones, speakers, mice", icon: "bluetooth", kcm: "kcm_bluetooth" },
             { name: "Printers & Scanners", hint: "Add and manage printers", icon: "printer", kcm: "kcm_printer_manager" },
             { name: "Scan documents", hint: "Use a scanner", icon: "scanner", app: "org.kde.skanpage" },
-            { name: "Sound", hint: "Volume, speakers, microphone", icon: "audio-volume-high", kcm: "kcm_pulseaudio" }
+            { name: "Sound", hint: "Volume, speakers, microphone", icon: "sound", kcm: "kcm_pulseaudio" }
         ]},
         { title: "Your computer", items: [
-            { name: "Displays", hint: "Resolution, scaling, night light", icon: "video-display", kcm: "kcm_kscreen" },
-            { name: "Appearance", hint: "Light or dark, colors, wallpaper", icon: "preferences-desktop-theme-global", kcm: "kcm_lookandfeel" },
-            { name: "Keyboard", hint: "Layouts and shortcuts", icon: "input-keyboard", kcm: "kcm_keyboard" },
-            { name: "Mouse & Touchpad", hint: "Pointer speed, scrolling", icon: "input-mouse", kcm: "kcm_mouse" },
-            { name: "Power", hint: "Battery, sleep and screen off", icon: "battery", kcm: "kcm_powerdevilprofilesconfig" }
+            { name: "Displays", hint: "Resolution, scaling, night light", icon: "display", kcm: "kcm_kscreen" },
+            { name: "Appearance", hint: "Light or dark, colors, wallpaper", icon: "appearance", kcm: "kcm_lookandfeel" },
+            { name: "Keyboard", hint: "Layouts and shortcuts", icon: "keyboard", kcm: "kcm_keyboard" },
+            { name: "Mouse & Touchpad", hint: "Pointer speed, scrolling", icon: "mouse", kcm: "kcm_mouse" },
+            { name: "Power", hint: "Battery, sleep and screen off", icon: "power", kcm: "kcm_powerdevilprofilesconfig" }
         ]},
         { title: "You", items: [
-            { name: "Users", hint: "Your account and password", icon: "preferences-system-users", kcm: "kcm_users" },
-            { name: "Default apps", hint: "Which app opens what", icon: "preferences-desktop-default-applications", kcm: "kcm_componentchooser" },
-            { name: "Updates", hint: "Keep Lindle and your apps current", icon: "system-software-update", store: "updates" },
-            { name: "About Lindle", hint: "Version and hardware", icon: "help-about", kcm: "kcm_about-distro" }
+            { name: "Users", hint: "Your account and password", icon: "users", kcm: "kcm_users" },
+            { name: "Default apps", hint: "Which app opens what", icon: "apps", kcm: "kcm_componentchooser" },
+            { name: "Updates", hint: "Keep Lindle and your apps current", icon: "update", store: "updates" },
+            { name: "About Lindle", hint: "Version and hardware", icon: "info", kcm: "kcm_about-distro" }
         ]}
     ]
 
