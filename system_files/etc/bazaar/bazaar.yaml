@@ -1,0 +1,7 @@
+# Lindle's settings for Bazaar, the app store. Bazaar runs as a Flatpak and
+# reads this through /run/host/etc (see /usr/lib/tmpfiles.d/lindle-flatpak.conf).
+curated-config-paths:
+  - /run/host/etc/bazaar/config.yaml
+start-on-curated: true
+# Lindle updates apps automatically in the background.
+hide-auto-update-options: true

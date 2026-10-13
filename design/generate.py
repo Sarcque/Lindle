@@ -16,6 +16,7 @@ ROOT = Path(__file__).resolve().parent.parent
 TOKENS = ROOT / "design" / "tokens.json"
 SCHEMES_DIR = ROOT / "system_files" / "usr" / "share" / "color-schemes"
 WALLPAPER_DIR = ROOT / "system_files" / "usr" / "share" / "wallpapers" / "Lindle"
+STORE_DIR = ROOT / "system_files" / "etc" / "bazaar"
 LNF_DIR = ROOT / "system_files" / "usr" / "share" / "plasma" / "look-and-feel"
 LNF_PACKAGES = {"light": "org.lindle.desktop", "dark": "org.lindle.desktop.dark"}
 
@@ -249,6 +250,71 @@ def write_previews(tokens):
         print(f"wrote {out.relative_to(ROOT)}")
 
 
+def render_mark(size):
+    """The Lindle mark (design/logo/lindle-mark.svg) as an RGBA image."""
+    from PIL import Image, ImageDraw
+
+    ss = 4  # supersample for smooth edges
+    n = size * ss
+    k = n / 128
+    a, b = rgb("#6F8CFF"), rgb("#3D63F5")
+    grad = Image.new("RGB", (n, n))
+    px = grad.load()
+    for y in range(n):
+        for x in range(n):
+            t = (x + y) / (2 * (n - 1))
+            px[x, y] = tuple(round(a[i] + (b[i] - a[i]) * t) for i in range(3))
+    mask = Image.new("L", (n, n), 0)
+    ImageDraw.Draw(mask).rounded_rectangle((0, 0, n - 1, n - 1), round(30 * k), fill=255)
+    mark = Image.new("RGBA", (n, n), (0, 0, 0, 0))
+    mark.paste(grad, (0, 0), mask)
+    d = ImageDraw.Draw(mark)
+    w = round(14 * k)
+    # The "L": down from (44,32), a radius-12 corner around (56,84), across to (86,96).
+    import math
+    corner = [(56 - 12 * math.cos(math.radians(t)), 84 + 12 * math.sin(math.radians(t))) for t in range(0, 91, 5)]
+    points = [(44, 32)] + corner + [(86, 96)]
+    # Stamp round dots densely along the path: an even stroke with round caps.
+    r = w / 2
+    for (x0, y0), (x1, y1) in zip(points, points[1:]):
+        steps = max(1, int(math.hypot(x1 - x0, y1 - y0) * 4))
+        for i in range(steps + 1):
+            x = (x0 + (x1 - x0) * i / steps) * k
+            y = (y0 + (y1 - y0) * i / steps) * k
+            d.ellipse((x - r, y - r, x + r, y + r), fill="white")
+    return mark.resize((size, size), Image.LANCZOS)
+
+
+def write_store_banners(tokens):
+    """Banners for the top of the app store's curated page (Bazaar)."""
+    try:
+        from PIL import Image, ImageDraw, ImageFont
+    except ImportError:
+        print("Pillow not installed, skipping store banners")
+        return
+    import subprocess
+
+    def font(weight, size):
+        path = subprocess.run(["fc-match", "-f", "%{file}", f"Inter:style={weight}"],
+                              capture_output=True, text=True).stdout
+        return ImageFont.truetype(path, size)
+
+    STORE_DIR.mkdir(parents=True, exist_ok=True)
+    w, h = 1600, 400
+    for mode, folder in (("light", "images"), ("dark", "images_dark")):
+        p = tokens["color"][mode]
+        wall = Image.open(WALLPAPER_DIR / "contents" / folder / "3840x2160.png")
+        img = wall.resize((w, w * 2160 // 3840), Image.LANCZOS).crop((0, 250, w, 250 + h)).convert("RGBA")
+        img.alpha_composite(render_mark(176), (120, (h - 176) // 2))
+        d = ImageDraw.Draw(img)
+        d.text((340, 128), "Lindle App Store", font=font("SemiBold", 68), fill=rgb(p["text"]))
+        d.text((342, 222), "Apps for work, play and everything in between. Free to install.",
+               font=font("Regular", 30), fill=rgb(p["textMuted"]))
+        out = STORE_DIR / f"banner-{mode}.png"
+        img.convert("RGB").save(out, optimize=True)
+        print(f"wrote {out.relative_to(ROOT)}")
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--check", action="store_true", help="only run contrast checks")
@@ -267,6 +333,7 @@ def main():
     write_schemes(tokens)
     write_wallpapers(tokens)
     write_previews(tokens)
+    write_store_banners(tokens)
 
 
 if __name__ == "__main__":

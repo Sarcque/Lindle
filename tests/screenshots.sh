@@ -95,3 +95,5 @@ open_app wordcraft 07-wordcraft 30
 open_app gridcraft 08-gridcraft 30
 open_app photocraft 09-photocraft 30
 open_app "system settings" 10-settings 20
+# The app store is a Flatpak installed on first boot, so it comes last.
+open_app bazaar 11-app-store 40

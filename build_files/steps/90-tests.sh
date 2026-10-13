@@ -28,6 +28,15 @@ grep -q 'LookAndFeelPackage=org.lindle.desktop' /usr/share/kde-settings/kde-prof
 test -f /usr/lib/plasmalogin/plasmalogin.conf.d/50-lindle.conf
 test -f /usr/share/plasma/plasma-welcome/intro-customization.desktop
 test -f /usr/share/plasma/plasma-welcome/extra-pages/10-apps.qml
+test -f /usr/share/icons/Colloid-Light/index.theme
+test -f /usr/share/icons/Lindle/index.theme
+test -f /usr/share/icons/Lindle-Dark/index.theme
+test -f /usr/share/icons/Lindle/scalable/places/start-here.svg
+test -f /usr/share/icons/hicolor/scalable/apps/lindle-logo.svg
+test -f /usr/share/flatpak/preinstall.d/io.github.kolunmi.Bazaar.preinstall
+test -f /etc/bazaar/config.yaml
+test -f /etc/bazaar/banner-light.png
+grep -q "^NoDisplay=true" /usr/share/applications/org.kde.discover.desktop
 
 # fc-match prints one short line, so grep -q cannot SIGPIPE the producer under pipefail.
 fc-match -f "%{family}\n" "Inter" | grep -qi "^Inter"

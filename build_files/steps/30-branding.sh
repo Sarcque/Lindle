@@ -28,3 +28,9 @@ if [[ -f "$defaults" ]]; then
     sed -i "s|^Image=.*|Image=file:///usr/share/wallpapers/Lindle/contents/images/3840x2160.png|" "$defaults"
     cat "$defaults"
 fi
+
+# The Lindle App Store (Bazaar, a Flatpak) replaces Discover in menus. Discover
+# stays installed for firmware and system update notifications.
+if [[ -f /usr/share/applications/org.kde.discover.desktop ]]; then
+    sed -i '/^\[Desktop Entry\]/a NoDisplay=true' /usr/share/applications/org.kde.discover.desktop
+fi
