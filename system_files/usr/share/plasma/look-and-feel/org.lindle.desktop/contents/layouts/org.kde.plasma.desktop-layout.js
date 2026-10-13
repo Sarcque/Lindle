@@ -12,6 +12,11 @@ for (let i = 0; i < allPanels.length; ++i) {
     const widgets = panel.widgets();
     for (let j = 0; j < widgets.length; ++j) {
         const widget = widgets[j];
+        if (widget.type === "org.kde.plasma.kickoff") {
+            widget.currentConfigGroup = ["General"];
+            widget.writeConfig("icon", "start-here-lindle");
+            widget.reloadConfig();
+        }
         if (widget.type === "org.kde.plasma.icontasks") {
             widget.currentConfigGroup = ["General"];
             widget.writeConfig("launchers", [

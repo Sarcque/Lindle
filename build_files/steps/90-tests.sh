@@ -24,6 +24,13 @@ test -f /usr/share/plasma/look-and-feel/org.lindle.desktop.dark/metadata.json
 test -f /usr/share/wallpapers/Lindle/contents/images/3840x2160.png
 test -f /usr/share/wallpapers/Lindle/contents/images_dark/3840x2160.png
 grep -q 'LookAndFeelPackage=org.lindle.desktop' /usr/share/kde-settings/kde-profile/default/xdg/kdeglobals
+grep -q '^Theme=Lindle' /usr/share/kde-settings/kde-profile/default/xdg/kdeglobals
+grep -q '^LOGO=lindle-logo' /usr/lib/os-release
+test -f /usr/share/icons/Lindle/index.theme
+test -f /usr/share/icons/Lindle/scalable/apps/lindle-app-center.svg
+test -f /usr/share/icons/hicolor/scalable/apps/lindle-logo.svg
+grep -q '^Name=App Center' /usr/share/applications/org.kde.discover.desktop
+grep -q '^Icon=lindle-app-center' /usr/share/applications/org.kde.discover.desktop
 [[ "$(readlink /usr/share/wallpapers/Default)" == Lindle ]]
 test -f /usr/lib/plasmalogin/plasmalogin.conf.d/50-lindle.conf
 test -f /usr/share/plasma/plasma-welcome/intro-customization.desktop

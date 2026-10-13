@@ -38,7 +38,8 @@ One source of truth, generated into every toolkit.
 - **Tokens** (`design/tokens.json`): color (light/dark, one accent), type scale, radius, spacing, elevation, motion durations.
 - **Generators** turn tokens into: Plasma color scheme, Plasma style (panels/widgets), Aurorae or KDecoration window decoration, Qt application style config, GTK3/GTK4 accent and color overrides (so GTK apps like GIMP match), SDDM login theme, Plymouth boot splash, GRUB theme, Konsole profile.
 - **Typography:** Inter for UI, a matching monospace (e.g. JetBrains Mono). Metric-compatible fonts (Carlito, Caladea, Liberation) so Word/Excel documents keep their layout.
-- **Icons:** start from Papirus or Breeze and recolor to our palette; commission a custom set later.
+- **Icons:** done in 0.1: the generated "Lindle" icon theme (`design/icons.py`) with branded tiles for the system apps, folders and the logo, inheriting Breeze for everything else. Next: cover more app and file-type icons, then commission a full custom set.
+- **App Center:** KDE Discover relaunched as "App Center" (own name and icon). Next: a curated front page of picks, and a real Lindle-owned app once Discover's branding limits (window title, appstream name) get in the way.
 - **Craft details that make it feel premium:** consistent 8px grid, one corner radius family, subtle blur on panels, real motion curves, a coherent sound set, curated wallpapers, crisp HiDPI defaults (fractional scaling on).
 
 Rule: nothing ships that hasn't been checked in light mode, dark mode, at 100% and 150–200% scaling.
@@ -113,7 +114,16 @@ Split into separate repos only when a part gets its own contributors (likely `de
 
 **1.0:** after a beta period with real switchers, usability-tested on people who have never used Linux.
 
-## 8. Things to decide early
+## 8. Towards a complete OS identity
+
+Order of work after 0.1, each item generated from `design/tokens.json` where possible:
+1. Plymouth boot splash and GRUB/systemd-boot theme with the Lindle mark.
+2. Login screen (SDDM/plasmalogin) theme: logo, accent, blur.
+3. Window decorations and Plasma style that follow the tokens' radius and elevation.
+4. Sound theme and cursor theme.
+5. Lindle-owned apps: Welcome app, App Center front page, Settings landing page.
+
+## 9. Things to decide early
 
 - **Name and trademark check** for "Lindle" before the website and branding.
 - **License:** our own code GPL-3.0 or MIT; artwork CC BY-SA.

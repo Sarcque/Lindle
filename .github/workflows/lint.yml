@@ -30,7 +30,8 @@ jobs:
         run: |
           python3 design/generate.py --check
 
-      - name: Check generated color schemes are up to date
+      - name: Check generated color schemes and icons are up to date
         run: |
           python3 design/generate.py
-          git diff --exit-code -- system_files/usr/share/color-schemes
+          git diff --exit-code -- system_files/usr/share/color-schemes system_files/usr/share/icons design/logo
+          test -z "$(git ls-files --others --exclude-standard system_files/usr/share/icons design/logo)"

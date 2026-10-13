@@ -18,7 +18,16 @@ else
     echo "VARIANT_ID=lindle" >> /usr/lib/os-release
 fi
 
+# The logo shown in System Settings > About and on the login screen.
+if grep -q "^LOGO=" /usr/lib/os-release; then
+    sed -i "s|^LOGO=.*|LOGO=lindle-logo|" /usr/lib/os-release
+else
+    echo "LOGO=lindle-logo" >> /usr/lib/os-release
+fi
+
 fc-cache -f
+
+gtk-update-icon-cache -f -t /usr/share/icons/hicolor || true
 
 # Lindle's wallpaper is the default everywhere a "Default" wallpaper is used
 # (new users, the lock screen, the login screen).
