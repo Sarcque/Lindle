@@ -12,7 +12,9 @@ import json
 import sys
 from pathlib import Path
 
+import cursors
 import icons
+import plasma
 import system
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -270,6 +272,8 @@ def main():
     write_schemes(tokens)
     icons.write_icons(tokens)
     system.write_system(tokens)
+    plasma.write_plasma(tokens)
+    cursors.write_cursors()
     write_wallpapers(tokens)
     write_previews(tokens)
 

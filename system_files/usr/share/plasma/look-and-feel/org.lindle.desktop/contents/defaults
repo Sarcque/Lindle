@@ -8,10 +8,10 @@ ColorScheme=LindleLight
 Theme=Lindle
 
 [plasmarc][Theme]
-name=default
+name=Lindle
 
 [kcminputrc][Mouse]
-cursorTheme=breeze_cursors
+cursorTheme=LindleCursors
 
 [kwinrc][WindowSwitcher]
 LayoutName=org.kde.breeze.desktop

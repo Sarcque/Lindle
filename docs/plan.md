@@ -124,9 +124,10 @@ Status of each piece, all generated from `design/tokens.json` where possible (`d
 | Boot menu (GRUB) | Done, applied on first boot by `lindle-grub-theme.service` through `/boot/grub2/custom.cfg`. Needs checking on real UEFI and BIOS machines. |
 | Login screen | Colors, accent, font and icons seeded for the login user (`/usr/share/lindle/greeter/kdeglobals`); wallpaper and blur come from Plasma Login. A logo on the login screen needs a custom greeter, not planned yet. |
 | Window shadows and animation | Done through Breeze settings (`breezerc`), tinted from the tokens. |
-| Window decoration shape and Plasma style (panel and widget SVGs) | Not done: radius from the tokens needs an Aurorae or custom decoration plus a Plasma theme. Next, to be checked against screenshots. |
+| Plasma style | Done for panels, menus/popups and tooltips: a "Lindle" desktop theme (`design/plasma.py`) with corner radii from the tokens, a hairline border, glass opacity and a soft wide shadow. Everything else falls back to Breeze. Needs checking against screenshots. |
+| Window decoration shape | Not done: Breeze's decoration keeps its own corner radius. Needs a custom decoration. |
 | Sounds | Done: "Lindle" sound theme, 14 synthesized chimes. |
-| Cursors | Not done: still Breeze. Needs a generated Xcursor theme. |
+| Cursors | Partly done: Lindle arrow and text cursors (`design/cursors.py`), the rest still Breeze. |
 | Welcome, App Center, Settings | Done as QML apps (`/usr/share/lindle/apps`, run by `lindle-qml`), sharing one theme with the system colors. Welcome does not replace Plasma's Welcome Center on first login yet. |
 
 Lindle's apps open the system through `lindle://` links (`/usr/libexec/lindle/lindle-open`, fixed list of actions). The App Center is a curated front page over Discover, which stays underneath as the install and update engine.

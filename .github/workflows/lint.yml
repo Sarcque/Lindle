@@ -39,5 +39,5 @@ jobs:
       - name: Check generated color schemes and icons are up to date
         run: |
           python3 design/generate.py
-          git diff --exit-code -- system_files/usr/share/color-schemes system_files/usr/share/icons design/logo system_files/usr/share/lindle/qml system_files/usr/share/lindle/greeter system_files/usr/share/kde-settings/kde-profile/default/xdg/breezerc
-          test -z "$(git ls-files --others --exclude-standard system_files/usr/share/icons design/logo system_files/usr/share/lindle)"
+          git diff --exit-code -- system_files/usr/share/color-schemes system_files/usr/share/icons design/logo system_files/usr/share/lindle/qml system_files/usr/share/lindle/greeter system_files/usr/share/kde-settings/kde-profile/default/xdg/breezerc system_files/usr/share/plasma/desktoptheme
+          test -z "$(git ls-files --others --exclude-standard system_files/usr/share/icons design/logo system_files/usr/share/lindle system_files/usr/share/plasma/desktoptheme)"

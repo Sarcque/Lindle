@@ -65,6 +65,13 @@ systemctl is-enabled cups.socket
 systemctl is-enabled avahi-daemon.service
 systemctl is-enabled fwupd-refresh.timer
 
+test -f /usr/share/plasma/desktoptheme/Lindle/metadata.json
+test -f /usr/share/plasma/desktoptheme/Lindle/widgets/panel-background.svg
+test -f /usr/share/plasma/desktoptheme/Lindle/dialogs/background.svg
+test -f /usr/share/icons/LindleCursors/cursors/left_ptr
+grep -q '^name=Lindle' /usr/share/plasma/look-and-feel/org.lindle.desktop/contents/defaults
+grep -q '^cursorTheme=LindleCursors' /usr/share/plasma/look-and-feel/org.lindle.desktop/contents/defaults
+
 # fc-match prints one short line, so grep -q cannot SIGPIPE the producer under pipefail.
 fc-match -f "%{family}\n" "Inter" | grep -qi "^Inter"
 
