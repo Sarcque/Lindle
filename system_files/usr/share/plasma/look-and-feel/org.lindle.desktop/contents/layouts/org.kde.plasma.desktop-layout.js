@@ -12,6 +12,11 @@ for (let i = 0; i < allPanels.length; ++i) {
     const widgets = panel.widgets();
     for (let j = 0; j < widgets.length; ++j) {
         const widget = widgets[j];
+        if (widget.type === "org.kde.plasma.kickoff") {
+            widget.currentConfigGroup = ["General"];
+            widget.writeConfig("icon", "start-here-lindle");
+            widget.reloadConfig();
+        }
         if (widget.type === "org.kde.plasma.icontasks") {
             widget.currentConfigGroup = ["General"];
             widget.writeConfig("launchers", [
@@ -21,7 +26,7 @@ for (let i = 0; i < allPanels.length; ++i) {
                 "applications:ai.storyteller.gridcraft.desktop",
                 "applications:ai.storyteller.deckcraft.desktop",
                 "applications:ai.storyteller.photocraft.desktop",
-                "applications:org.kde.discover.desktop"
+                "applications:lindle-app-center.desktop"
             ]);
             widget.reloadConfig();
         }

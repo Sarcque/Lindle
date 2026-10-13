@@ -1,0 +1,21 @@
+#!/bin/bash
+# Copies the Lindle GRUB theme next to GRUB's own files and turns it on.
+# GRUB reads /boot/grub2/custom.cfg after its generated config, so this survives updates.
+# Does nothing if the person already has a custom.cfg.
+set -euo pipefail
+
+dest=/boot/grub2/themes/lindle
+mkdir -p "$dest"
+cp -f /usr/share/lindle/grub/lindle/theme.txt /usr/share/lindle/grub/lindle/background.png "$dest/"
+
+cat > /boot/grub2/custom.cfg <<'EOF'
+# Lindle boot menu theme. Delete this file to go back to the plain menu.
+insmod all_video
+insmod gfxterm
+insmod png
+set gfxmode=auto
+set gfxpayload=keep
+loadfont unicode
+terminal_output gfxterm
+set theme=${prefix}/themes/lindle/theme.txt
+EOF

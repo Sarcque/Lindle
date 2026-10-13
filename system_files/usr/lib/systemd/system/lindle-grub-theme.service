@@ -1,0 +1,13 @@
+[Unit]
+Description=Apply the Lindle theme to the boot menu
+ConditionPathIsDirectory=/boot/grub2
+ConditionPathExists=!/boot/grub2/custom.cfg
+After=local-fs.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/libexec/lindle/grub-theme
+
+[Install]
+WantedBy=multi-user.target

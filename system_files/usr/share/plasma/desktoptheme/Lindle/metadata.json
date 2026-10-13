@@ -1,0 +1,17 @@
+{
+    "KPlugin": {
+        "Authors": [
+            {
+                "Name": "Lindle Contributors"
+            }
+        ],
+        "Description": "Lindle's Plasma style: rounded, softly lit panels and menus",
+        "EnabledByDefault": true,
+        "Id": "Lindle",
+        "License": "Apache-2.0",
+        "Name": "Lindle",
+        "Version": "0.1",
+        "Website": "https://github.com/sarcque/lindle"
+    },
+    "X-Plasma-API": "5.0"
+}

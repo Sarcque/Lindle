@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=Application
+Name=App Center
+GenericName=App Store
+Comment=Find, install and update apps
+Exec=lindle-qml app-center
+Icon=lindle-app-center
+Categories=Qt;System;PackageManager;
+Keywords=apps;store;software;install;flatpak;
+StartupNotify=false
+Terminal=false
+StartupWMClass=lindle-app-center

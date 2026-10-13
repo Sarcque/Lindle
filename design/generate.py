@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Generate Lindle's theme files from design/tokens.json.
 
-    python3 design/generate.py            # write color schemes (and wallpapers if Pillow is installed)
+    python3 design/generate.py            # write color schemes and icons (and wallpapers if Pillow is installed)
     python3 design/generate.py --check    # contrast checks only, exits non-zero on failure
 
 Outputs go into system_files/, which the image build copies over the OS.
@@ -11,6 +11,11 @@ import argparse
 import json
 import sys
 from pathlib import Path
+
+import cursors
+import icons
+import plasma
+import system
 
 ROOT = Path(__file__).resolve().parent.parent
 TOKENS = ROOT / "design" / "tokens.json"
@@ -255,7 +260,7 @@ def main():
     args = parser.parse_args()
 
     tokens = json.loads(TOKENS.read_text())
-    failures = check_contrast(tokens)
+    failures = check_contrast(tokens) + icons.check_icon_contrast(tokens, contrast)
     for f in failures:
         print(f"contrast: {f}", file=sys.stderr)
     if failures:
@@ -265,6 +270,10 @@ def main():
     if args.check:
         return
     write_schemes(tokens)
+    icons.write_icons(tokens)
+    system.write_system(tokens)
+    plasma.write_plasma(tokens)
+    cursors.write_cursors()
     write_wallpapers(tokens)
     write_previews(tokens)
 

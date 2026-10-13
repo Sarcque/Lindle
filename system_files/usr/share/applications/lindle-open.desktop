@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=Lindle links
+Exec=/usr/libexec/lindle/lindle-open %u
+MimeType=x-scheme-handler/lindle;
+NoDisplay=true
+Terminal=false

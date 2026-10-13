@@ -1,0 +1,2 @@
+# Show the Lindle boot splash and keep the console quiet.
+kargs = ["rhgb", "quiet", "splash"]

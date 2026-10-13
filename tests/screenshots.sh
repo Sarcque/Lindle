@@ -56,8 +56,13 @@ type_text() {
 
 trap 'kill "$(cat "$work/qemu.pid")" 2>/dev/null || true' EXIT
 
-# First boot runs setup services and starts Flatpak installs in the background.
-sleep 240
+# Boot menu and boot splash, then first boot runs setup services and starts
+# Flatpak installs in the background.
+sleep 8
+shot 00-boot-menu
+sleep 12
+shot 00-boot-splash
+sleep 215
 shot 01-login
 
 type_text lindle
@@ -95,3 +100,8 @@ open_app wordcraft 07-wordcraft 30
 open_app gridcraft 08-gridcraft 30
 open_app photocraft 09-photocraft 30
 open_app "system settings" 10-settings 20
+
+# Lindle's own apps.
+open_app "lindle-qml app-center" 11-app-center 15
+open_app "lindle-qml settings" 12-lindle-settings 15
+open_app "lindle-qml welcome" 13-lindle-welcome 15
