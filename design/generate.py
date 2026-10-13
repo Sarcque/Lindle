@@ -16,6 +16,7 @@ ROOT = Path(__file__).resolve().parent.parent
 TOKENS = ROOT / "design" / "tokens.json"
 SCHEMES_DIR = ROOT / "system_files" / "usr" / "share" / "color-schemes"
 WALLPAPER_DIR = ROOT / "system_files" / "usr" / "share" / "wallpapers" / "Lindle"
+PLYMOUTH_DIR = ROOT / "system_files" / "usr" / "share" / "plymouth" / "themes" / "lindle"
 STORE_DIR = ROOT / "system_files" / "etc" / "bazaar"
 LNF_DIR = ROOT / "system_files" / "usr" / "share" / "plasma" / "look-and-feel"
 LNF_PACKAGES = {"light": "org.lindle.desktop", "dark": "org.lindle.desktop.dark"}
@@ -315,6 +316,29 @@ def write_store_banners(tokens):
         print(f"wrote {out.relative_to(ROOT)}")
 
 
+def write_bootsplash(tokens):
+    """Logo and wordmark for the boot splash (Plymouth theme "lindle")."""
+    try:
+        from PIL import Image, ImageDraw, ImageFont
+    except ImportError:
+        print("Pillow not installed, skipping boot splash")
+        return
+    import subprocess
+
+    path = subprocess.run(["fc-match", "-f", "%{file}", "Inter:style=SemiBold"],
+                          capture_output=True, text=True).stdout
+    font = ImageFont.truetype(path, 56)
+    mark = render_mark(128)
+    text = "Lindle"
+    tw = round(ImageDraw.Draw(Image.new("L", (1, 1))).textlength(text, font=font))
+    img = Image.new("RGBA", (max(128, tw), 128 + 32 + 64), (0, 0, 0, 0))
+    img.alpha_composite(mark, ((img.width - 128) // 2, 0))
+    ImageDraw.Draw(img).text(((img.width - tw) // 2, 160), text, font=font, fill=rgb(tokens["color"]["dark"]["text"]))
+    PLYMOUTH_DIR.mkdir(parents=True, exist_ok=True)
+    img.save(PLYMOUTH_DIR / "watermark.png", optimize=True)
+    print(f"wrote {(PLYMOUTH_DIR / 'watermark.png').relative_to(ROOT)}")
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--check", action="store_true", help="only run contrast checks")
@@ -334,6 +358,7 @@ def main():
     write_wallpapers(tokens)
     write_previews(tokens)
     write_store_banners(tokens)
+    write_bootsplash(tokens)
 
 
 if __name__ == "__main__":
