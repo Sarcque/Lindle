@@ -15,6 +15,16 @@ for (let i = 0; i < allPanels.length; ++i) {
         if (widget.type === "org.kde.plasma.kickoff") {
             widget.currentConfigGroup = ["General"];
             widget.writeConfig("icon", "lindle-logo");
+            widget.writeConfig("favorites", [
+                "preferred://browser",
+                "org.kde.dolphin.desktop",
+                "ai.storyteller.wordcraft.desktop",
+                "ai.storyteller.gridcraft.desktop",
+                "ai.storyteller.deckcraft.desktop",
+                "ai.storyteller.photocraft.desktop",
+                "io.github.kolunmi.Bazaar.desktop",
+                "systemsettings.desktop"
+            ]);
         }
         if (widget.type === "org.kde.plasma.icontasks") {
             widget.currentConfigGroup = ["General"];
