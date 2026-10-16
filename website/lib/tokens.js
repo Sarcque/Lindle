@@ -28,8 +28,19 @@ function tokensCss(tokens = JSON.parse(fs.readFileSync(TOKENS_PATH, 'utf8'))) {
       ...wallpaper[mode].blobs.map((c, i) => `  --wall-blob-${i + 1}: ${c};`),
     ].join('\n');
 
+  // The hero and footer are always dark, in both schemes.
+  const fixedDark = Object.entries(color.dark)
+    .map(([name, value]) => `  --d-${kebab(name)}: ${value};`)
+    .join('\n');
+  const fixedWall = [
+    `  --d-wall-base: ${wallpaper.dark.base};`,
+    ...wallpaper.dark.blobs.map((c, i) => `  --d-wall-blob-${i + 1}: ${c};`),
+  ].join('\n');
+
   return `:root {
 ${shared}
+${fixedDark}
+${fixedWall}
 ${colorVars(color.light)}
 ${wall('light')}
   color-scheme: light;

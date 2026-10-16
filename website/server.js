@@ -31,10 +31,10 @@ function createApp() {
         title: 'Page not found',
         description: 'This page does not exist.',
         body: `
-    <section class="wrap page-head">
+    <section class="page-hero"><div class="wrap">
       <h1>Page not found</h1>
       <p class="lead">This page does not exist. <a href="/">Go to the home page</a>.</p>
-    </section>`,
+    </div></section>`,
       }),
     );
   });

@@ -1,60 +1,79 @@
-const features = [
+const rows = [
   {
-    title: 'Choose the layout that feels like home',
-    text: 'The Welcome Center asks which desktop you are used to. Windows-like gives you a bottom taskbar and start menu; Mac-like gives you a top bar and a dock.',
-    img: 'layout-mac.webp',
-    alt: 'Lindle with the Mac-like layout',
+    n: '01',
+    title: 'Pick the desktop you know',
+    text: 'The Welcome Center asks which desktop feels like home. Windows-like gives you a bottom taskbar and start menu; Mac-like gives you a top bar and a dock. Both run on KDE Plasma 6, so they are fast and fully themed.',
+    img: 'start-menu.webp',
+    alt: 'The Lindle start menu',
   },
   {
+    n: '02',
     title: 'Office and photo apps, built in',
-    text: 'The Storytold Craft apps are part of the OS and pinned to the taskbar: WordCraft for documents, GridCraft for spreadsheets, DeckCraft for presentations and PhotoCraft for photos.',
-    img: 'photocraft.webp',
-    alt: 'PhotoCraft, the photo editor',
+    text: 'The Storytold Craft apps are part of the OS and pinned from the first boot: WordCraft for documents, GridCraft for spreadsheets, DeckCraft for presentations and PhotoCraft for photos. ONLYOFFICE is installed as well for the most complex Office files.',
+    img: 'gridcraft.webp',
+    alt: 'GridCraft, the spreadsheet app',
   },
   {
-    title: 'One app store for everything',
-    text: 'Find more apps in the app store, powered by Flathub. GIMP, Inkscape, Krita, Firefox, Thunderbird, VLC and Bottles for Windows apps are installed on first boot.',
+    n: '03',
+    title: 'One app store for everything else',
+    text: 'GIMP, Inkscape, Krita, Firefox, Thunderbird, VLC and Bottles (for Windows apps) are installed on first boot. Anything else is one click away in the store, powered by Flathub.',
     img: 'app-store.webp',
     alt: 'The Lindle app store',
   },
+  {
+    n: '04',
+    title: 'Settings that make sense',
+    text: 'A clean System Settings app, light and dark themes, and sensible defaults. Colors, type and spacing all come from one design system, checked for contrast.',
+    img: 'settings.webp',
+    alt: 'Lindle System Settings',
+  },
 ];
 
-const list = [
-  ['Atomic updates', 'The whole OS updates as one image in the background. If something breaks, pick the previous version at boot.'],
-  ['Codecs included', 'Video and music play out of the box, no extra downloads needed.'],
-  ['Light and dark', 'Lindle light and dark themes, the Inter typeface and a matching wallpaper, all checked for contrast.'],
-  ['Office-friendly fonts', 'Carlito and Caladea are metric-compatible with Calibri and Cambria.'],
-  ['Built on solid ground', 'Fedora KDE Plasma 6 and Universal Blue, with bootc for image-based updates.'],
-  ['Open source', 'Everything is on GitHub. Code under Apache-2.0, artwork under CC BY-SA 4.0.'],
+const specs = [
+  ['Atomic updates', 'The whole OS updates as one image in the background. Roll back from the boot menu.'],
+  ['Codecs included', 'Video and music play out of the box.'],
+  ['Metric-compatible fonts', 'Carlito and Caladea match Calibri and Cambria.'],
+  ['Built on', 'Fedora KDE Plasma 6, Universal Blue and bootc.'],
+  ['Open source', 'Code under Apache-2.0, artwork under CC BY-SA 4.0.'],
+  ['Self-updating apps', 'Flatpak apps update quietly in the background.'],
 ];
 
 module.exports = {
   path: '/features',
   title: 'Features',
-  description: 'What you get with Lindle: familiar layouts, built-in office and photo apps, an app store and updates that take care of themselves.',
+  description: 'Familiar layouts, built-in office and photo apps, an app store and updates that undo themselves.',
   body: `
-    <section class="wrap page-head">
-      <h1>Everything you need, nothing to set up</h1>
-      <p class="lead">Lindle takes care of the parts of Linux that usually need a terminal, so you can get on with your work.</p>
-    </section>
-${features
-  .map(
-    (f, i) => `
-    <section class="wrap section split${i % 2 ? ' reverse' : ''}">
-      <div>
-        <h2>${f.title}</h2>
-        <p>${f.text}</p>
+    <section class="page-hero">
+      <div class="grain"></div>
+      <div class="wrap">
+        <p class="mono tag">Features</p>
+        <h1>Made for the move,<br>not for the manual.</h1>
+        <p class="lead">Lindle takes care of the parts of Linux that usually need a terminal, so you can get on with your work.</p>
       </div>
-      <figure class="shot"><img src="/img/${f.img}" alt="${f.alt}" width="1280" height="800" loading="lazy"></figure>
+    </section>
+
+${rows
+  .map(
+    (r, i) => `
+    <section class="wrap feature${i % 2 ? ' flip' : ''}" data-reveal>
+      <div class="feature-copy">
+        <p class="mono num">${r.n}</p>
+        <h2>${r.title}</h2>
+        <p>${r.text}</p>
+      </div>
+      <div class="window small">
+        <div class="window-bar"><i></i><i></i><i></i></div>
+        <img src="/img/${r.img}" alt="${r.alt}" width="1280" height="800" loading="lazy">
+      </div>
     </section>`,
   )
   .join('')}
 
     <section class="wrap section">
-      <h2 class="section-title">And under the hood</h2>
-      <div class="cards">
-${list.map(([t, d]) => `        <article class="card"><h3>${t}</h3><p>${d}</p></article>`).join('\n')}
-      </div>
+      <h2 class="section-head-h" data-reveal>Under the hood</h2>
+      <dl class="specs" data-reveal>
+${specs.map(([t, d]) => `        <div><dt>${t}</dt><dd>${d}</dd></div>`).join('\n')}
+      </dl>
     </section>
 `,
 };

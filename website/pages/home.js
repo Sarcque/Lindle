@@ -1,50 +1,101 @@
+const apps = [
+  'WordCraft', 'GridCraft', 'DeckCraft', 'PhotoCraft', 'Firefox', 'Thunderbird',
+  'GIMP', 'Inkscape', 'Krita', 'VLC', 'ONLYOFFICE', 'Bottles',
+];
+const marquee = [...apps, ...apps].map((a) => `<span>${a}</span>`).join('');
+
 module.exports = {
   path: '/',
   description:
-    'Lindle is a modern, open source Linux desktop for people coming from macOS and Windows. It looks great, works out of the box and comes with familiar apps.',
+    'Lindle is a modern, open source Linux desktop for people coming from macOS and Windows. Familiar layout, apps included, updates you can undo.',
   body: `
     <section class="hero">
-      <div class="wrap hero-inner">
-        <div class="hero-text">
-          <p class="eyebrow">Version 0.1 · early preview</p>
-          <h1>A Linux desktop that feels like home.</h1>
-          <p class="lead">Lindle is a modern, open source desktop for people coming from macOS and Windows. It looks great, works out of the box, and your office and photo apps are already there.</p>
-          <div class="actions">
-            <a class="button primary" href="/download">Get Lindle</a>
-            <a class="button" href="/features">See what's inside</a>
-          </div>
+      <div class="grain"></div>
+      <div class="wrap hero-copy">
+        <p class="mono tag">Lindle 0.1 · early preview</p>
+        <h1>Linux, without<br>the <em>learning curve</em>.</h1>
+        <p class="lead">A desktop for people coming from macOS and Windows. Your office and photo apps are already installed, and updates install themselves.</p>
+        <div class="actions">
+          <a class="btn solid" href="/download">Download</a>
+          <a class="btn ghost" href="/features">How it works</a>
         </div>
-        <figure class="hero-shot">
-          <img src="/img/welcome.webp" alt="The Lindle desktop with the Welcome Center open" width="1280" height="800">
-        </figure>
+      </div>
+      <div class="wrap hero-stage">
+        <div class="window">
+          <div class="window-bar"><i></i><i></i><i></i><span class="mono">Welcome Center</span></div>
+          <img src="/img/welcome.webp" alt="The Lindle desktop with the Welcome Center open" width="1280" height="800" fetchpriority="high">
+        </div>
       </div>
     </section>
+
+    <div class="marquee" aria-label="Apps included"><div class="track">${marquee}</div></div>
 
     <section class="wrap section">
-      <h2 class="section-title">Made for switchers</h2>
-      <div class="cards">
-        <article class="card">
-          <h3>Familiar from day one</h3>
-          <p>Pick a Windows-like or Mac-like layout when you first log in. Your taskbar, start menu and shortcuts work the way you expect.</p>
+      <div class="section-head" data-reveal>
+        <p class="mono tag">What you get</p>
+        <h2>Everything a switcher needs. Nothing to configure.</h2>
+      </div>
+
+      <div class="bento">
+        <article class="tile t-wide" data-reveal>
+          <div class="tile-copy">
+            <h3>Pick the desktop you know</h3>
+            <p>Windows-style taskbar and start menu, or a Mac-style top bar and dock. Choose once in the Welcome Center and change your mind any time.</p>
+          </div>
+          <div class="duo">
+            <img src="/img/layout-windows.webp" alt="Windows-like layout" width="1280" height="800" loading="lazy">
+            <img src="/img/layout-mac.webp" alt="Mac-like layout" width="1280" height="800" loading="lazy">
+          </div>
         </article>
-        <article class="card">
-          <h3>Apps already installed</h3>
-          <p>WordCraft, GridCraft, DeckCraft and PhotoCraft sit in the dock, next to Firefox, Thunderbird, GIMP, Inkscape and VLC.</p>
+
+        <article class="tile t-tall accent" data-reveal>
+          <p class="mono tag">Updates</p>
+          <p class="big">1 click<br>to undo.</p>
+          <p>The OS updates as a single image. If something breaks, boot the previous version.</p>
         </article>
-        <article class="card">
-          <h3>Updates you never notice</h3>
-          <p>Lindle updates itself quietly in the background and applies changes on the next restart. A bad update can be undone at boot.</p>
+
+        <article class="tile" data-reveal>
+          <div class="fontdemo" aria-hidden="true"><span>Aa</span><b>=</b><span>Aa</span></div>
+          <h3>Documents keep their layout</h3>
+          <p>Carlito and Caladea match Calibri and Cambria, so shared files look right.</p>
+        </article>
+
+        <article class="tile" data-reveal>
+          <div class="swatches" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+          <h3>Light, dark, consistent</h3>
+          <p>One set of design tokens styles the desktop, the apps and this website.</p>
+        </article>
+
+        <article class="tile" data-reveal>
+          <div class="fontdemo" aria-hidden="true"><span>&#9654;</span></div>
+          <h3>Plays everything</h3>
+          <p>Video and music codecs are included. No extra downloads, no hunting for plugins.</p>
+        </article>
+
+        <article class="tile t-half shot" data-reveal>
+          <div class="tile-copy">
+            <h3>Office and photo apps, built in</h3>
+            <p>WordCraft, GridCraft, DeckCraft and PhotoCraft sit in the dock from the first boot.</p>
+          </div>
+          <img src="/img/wordcraft.webp" alt="WordCraft" width="1280" height="800" loading="lazy">
+        </article>
+
+        <article class="tile t-half shot" data-reveal>
+          <div class="tile-copy">
+            <h3>An app store for the rest</h3>
+            <p>Thousands more apps from Flathub, updated in the background.</p>
+          </div>
+          <img src="/img/app-store.webp" alt="The Lindle app store" width="1280" height="800" loading="lazy">
         </article>
       </div>
     </section>
 
-    <section class="wrap section split">
-      <div>
-        <h2>Your documents keep their layout</h2>
-        <p>Lindle ships fonts that match Calibri and Cambria, so Word and Excel files from colleagues look the way they were meant to. For the most complex Office files, ONLYOFFICE is installed as well.</p>
-        <p><a href="/features">All features</a></p>
+    <section class="wrap cta-section" data-reveal>
+      <div class="cta-box">
+        <h2>Try it on a spare machine or in a VM.</h2>
+        <p>Lindle is open source and moving fast. Early testers shape what comes next.</p>
+        <a class="btn solid" href="/download">Get Lindle</a>
       </div>
-      <figure class="shot"><img src="/img/wordcraft.webp" alt="WordCraft, Lindle's word processor" width="1280" height="800" loading="lazy"></figure>
     </section>
 `,
 };
