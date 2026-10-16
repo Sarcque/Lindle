@@ -1,0 +1,11 @@
+# Lindle Live: the Lindle desktop running from a USB stick, with an
+# "Install Lindle" button. Built into an ISO by Titanoboa
+# (.github/workflows/build-live-iso.yml).
+#
+#   podman build --cap-add sys_admin --security-opt label=disable iso/
+ARG IMAGE=ghcr.io/sarcque/lindle:latest
+FROM ${IMAGE}
+ARG IMAGE
+COPY src /src
+RUN --mount=type=cache,dst=/var/cache/libdnf5 \
+    IMAGE="${IMAGE}" /src/build.sh && rm -rf /src
