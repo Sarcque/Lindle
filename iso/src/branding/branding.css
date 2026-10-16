@@ -23,3 +23,9 @@
   --pf-t--global--text--color--link--default: #3D63F5;
   --pf-t--global--text--color--link--hover: #2F52DB;
 }
+
+/* Number circle of the current step in the left-hand list. */
+.pf-v6-c-wizard__nav-link.pf-m-current::before {
+  background-color: #3D63F5 !important;
+  color: #FFFFFF !important;
+}
