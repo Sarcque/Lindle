@@ -8,7 +8,8 @@
 
 set -euo pipefail
 
-iso="$1"
+# Absolute, because qemu -daemonize changes to /.
+iso="$(realpath "$1")"
 out="$2"
 mkdir -p "$out"
 work="$(mktemp -d)"
