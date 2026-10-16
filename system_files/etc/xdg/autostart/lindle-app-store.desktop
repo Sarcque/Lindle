@@ -1,8 +1,0 @@
-[Desktop Entry]
-Type=Application
-Name=Lindle App Store (background service)
-Comment=Keeps the app store ready so it opens instantly on its front page
-Exec=/usr/libexec/lindle-app-store-daemon
-NoDisplay=true
-OnlyShowIn=KDE;
-X-KDE-autostart-phase=2

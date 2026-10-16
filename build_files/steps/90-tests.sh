@@ -36,7 +36,6 @@ test -f /usr/share/icons/hicolor/scalable/apps/lindle-logo.svg
 test -f /usr/share/flatpak/preinstall.d/io.github.kolunmi.Bazaar.preinstall
 test -f /etc/bazaar/config.yaml
 test -f /etc/bazaar/banner-light.png
-test -x /usr/libexec/lindle-app-store-daemon
 grep -q "ai.storyteller.wordcraft" /usr/share/kde-settings/kde-profile/default/xdg/kicker-extra-favoritesrc
 grep -q "^NoDisplay=true" /usr/share/applications/org.kde.discover.desktop
 
