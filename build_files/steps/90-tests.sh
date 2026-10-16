@@ -49,3 +49,14 @@ fc-match -f "%{family}\n" "Inter" | grep -qi "^Inter"
 systemctl is-enabled lindle-flatpak-preinstall.service
 systemctl is-enabled rpm-ostreed-automatic.timer
 systemctl is-enabled flatpak-system-update.timer
+
+# Essentials: firewall, update notifier, restore, reset, backups, phone link
+systemctl is-enabled firewalld.service
+test -f /usr/lib/systemd/user/lindle-update-notifier.timer
+test -x /usr/libexec/lindle-update-notifier
+test -x /usr/bin/lindle-restore
+test -x /usr/bin/lindle-reset-desktop
+desktop-file-validate /usr/share/applications/lindle-restore.desktop
+desktop-file-validate /usr/share/applications/lindle-reset-desktop.desktop
+rpm -q plasma-firewall kup kde-connect orca liberation-sans-fonts jq kdialog
+grep -q '^application/x-ms-dos-executable=com.usebottles.bottles.desktop' /etc/xdg/mimeapps.list

@@ -1,0 +1,9 @@
+[Unit]
+Description=Check for a Lindle update that is ready to use
+
+[Timer]
+OnStartupSec=5min
+OnUnitActiveSec=1h
+
+[Install]
+WantedBy=timers.target
