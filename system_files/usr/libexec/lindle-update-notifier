@@ -1,0 +1,24 @@
+#!/bin/bash
+# Lindle updates download in the background and apply on the next restart
+# (/etc/rpm-ostreed.conf). When one is ready, say so once, with a button to
+# restart now.
+
+set -euo pipefail
+
+staged=$(rpm-ostree status --json | jq -r '.deployments[] | select(.staged == true) | .checksum')
+[[ -n "$staged" ]] || exit 0
+
+state="${XDG_STATE_HOME:-$HOME/.local/state}/lindle"
+mkdir -p "$state"
+[[ "$(cat "$state/notified-update" 2>/dev/null)" == "$staged" ]] && exit 0
+echo "$staged" >"$state/notified-update"
+
+action=$(notify-send --app-name=Lindle --icon=lindle-logo --wait \
+    --action=restart="Restart now" \
+    "Update ready" \
+    "Restart your computer to finish updating Lindle. Your apps and files stay as they are." || true)
+
+if [[ "$action" == restart ]]; then
+    # Plasma's own restart, so open apps can ask to save first.
+    busctl --user call org.kde.Shutdown /Shutdown org.kde.Shutdown logoutAndReboot
+fi

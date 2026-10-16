@@ -11,6 +11,20 @@ packages=(
     # Metric-compatible with Calibri and Cambria, so Office documents keep their layout
     google-carlito-fonts
     google-crosextra-caladea-fonts
+    # Metric-compatible with Arial, Times New Roman and Courier New
+    liberation-sans-fonts
+    liberation-serif-fonts
+    liberation-mono-fonts
+    # Firewall page in System Settings (firewalld is the firewall itself)
+    plasma-firewall
+    firewalld
+    # Phone link: notifications, files and clipboard between phone and PC
+    kde-connect
+    # Screen reader
+    orca
+    # Used by Lindle's update notifier and restore tools
+    jq
+    kdialog
 )
 
 dnf5 install -y "${packages[@]}"

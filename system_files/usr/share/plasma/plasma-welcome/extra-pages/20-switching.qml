@@ -28,7 +28,10 @@ Welcome.Page {
                 ["File Explorer or Finder", "Files, pinned to the dock"],
                 ["Microsoft Store or App Store", "The Lindle App Store (Bazaar), pinned to the dock"],
                 ["Control Panel or System Settings", "System Settings, in the start menu"],
-                ["Windows Update or Software Update", "Nothing to do: updates install in the background and apply on restart"]
+                ["Windows Update or Software Update", "Nothing to do: updates install in the background and apply on restart"],
+                ["System Restore or Time Machine", "Restore Previous Version undoes the last update; Pika Backup saves your files"],
+                ["Windows Security", "Firewall in System Settings; it is on by default"],
+                ["Running Windows programs", "Double-click an .exe and it opens in Bottles"]
             ]
 
             delegate: Item {

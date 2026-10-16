@@ -12,3 +12,10 @@ systemctl enable lindle-flatpak-preinstall.service
 # OS updates download in the background and apply on the next restart
 # (AutomaticUpdatePolicy=stage in /etc/rpm-ostreed.conf).
 systemctl enable rpm-ostreed-automatic.timer
+
+# The firewall blocks incoming connections; the Firewall page in System
+# Settings turns it on and off.
+systemctl enable firewalld.service
+
+# Tells people when an update is ready and offers to restart.
+systemctl --global enable lindle-update-notifier.timer
