@@ -6,4 +6,5 @@ set -ouex pipefail
 
 [[ "${NVIDIA:-N}" == Y ]] || exit 0
 
-AKMODNV_PATH=/tmp/akmods-nv-rpms /tmp/akmods-nv-rpms/ublue-os/nvidia-install.sh
+# IMAGE_NAME=kinoite also adds supergfxctl, for laptops with two graphics chips.
+IMAGE_NAME=kinoite AKMODNV_PATH=/tmp/akmods-nv-rpms /tmp/akmods-nv-rpms/ublue-os/nvidia-install.sh
