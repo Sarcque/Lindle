@@ -46,6 +46,8 @@ jobs:
         run: |
           sudo podman build --cap-add sys_admin --security-opt label=disable \
             --build-arg IMAGE="$IMAGE" -t localhost/lindle-live:latest iso/
+          # titanoboa resolves iso-dest with realpath, which needs the folder.
+          mkdir -p output
 
       - name: Build the ISO
         id: iso
