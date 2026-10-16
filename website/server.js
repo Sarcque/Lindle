@@ -15,9 +15,15 @@ function createApp() {
     res.sendFile(path.join(__dirname, '..', 'design', 'logo', 'lindle-mark.svg')),
   );
 
-  const fontDir = (pkg) => path.dirname(require.resolve(`@fontsource-variable/${pkg}/package.json`));
-  app.use('/fonts/inter', express.static(fontDir('inter'), { maxAge: '30d' }));
-  app.use('/fonts/jetbrains-mono', express.static(fontDir('jetbrains-mono'), { maxAge: '30d' }));
+  const fontDir = (pkg) => path.dirname(require.resolve(`${pkg}/package.json`));
+  const fonts = {
+    inter: '@fontsource-variable/inter',
+    'jetbrains-mono': '@fontsource-variable/jetbrains-mono',
+    'instrument-serif': '@fontsource/instrument-serif',
+  };
+  for (const [name, pkg] of Object.entries(fonts)) {
+    app.use(`/fonts/${name}`, express.static(fontDir(pkg), { maxAge: '30d' }));
+  }
   app.use(express.static(path.join(__dirname, 'public'), { maxAge: '1h' }));
 
   for (const page of PAGES) {
@@ -31,7 +37,7 @@ function createApp() {
         title: 'Page not found',
         description: 'This page does not exist.',
         body: `
-    <section class="page-hero"><div class="wrap">
+    <section class="sub-hero"><div class="wrap">
       <h1>Page not found</h1>
       <p class="lead">This page does not exist. <a href="/">Go to the home page</a>.</p>
     </div></section>`,

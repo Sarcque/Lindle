@@ -14,7 +14,7 @@ async function withServer(fn) {
 
 test('every page, the logo and the stylesheets load', () =>
   withServer(async (base) => {
-    for (const path of ['/', '/features', '/download', '/about', '/logo.svg', '/tokens.css', '/css/site.css', '/fonts/inter/index.css']) {
+    for (const path of ['/', '/features', '/download', '/about', '/logo.svg', '/tokens.css', '/css/site.css', '/fonts/inter/index.css', '/fonts/instrument-serif/latin-400.css', '/js/site.js']) {
       const res = await fetch(base + path);
       assert.strictEqual(res.status, 200, path);
     }
