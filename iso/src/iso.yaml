@@ -1,0 +1,11 @@
+label: Lindle-Live
+grub2:
+  default: 0
+  timeout: 5
+  entries:
+    - name: "Try or Install Lindle"
+      linux: "/images/pxeboot/vmlinuz quiet rhgb splash root=live:CDLABEL=Lindle-Live enforcing=0 rd.live.image"
+      initrd: "/images/pxeboot/initrd.img"
+    - name: "Try or Install Lindle (safe graphics)"
+      linux: "/images/pxeboot/vmlinuz quiet rhgb splash root=live:CDLABEL=Lindle-Live enforcing=0 rd.live.image nomodeset"
+      initrd: "/images/pxeboot/initrd.img"
