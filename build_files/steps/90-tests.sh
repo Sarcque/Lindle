@@ -49,3 +49,8 @@ fc-match -f "%{family}\n" "Inter" | grep -qi "^Inter"
 systemctl is-enabled lindle-flatpak-preinstall.service
 systemctl is-enabled rpm-ostreed-automatic.timer
 systemctl is-enabled flatpak-system-update.timer
+
+# NVIDIA edition: the driver's kernel module is installed.
+if [[ "${NVIDIA:-N}" == Y ]]; then
+    rpm -qa 'kmod-nvidia*' | grep -q .
+fi

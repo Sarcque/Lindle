@@ -99,6 +99,10 @@ build $target_image=image_name $tag=default_tag:
     set -euox pipefail
 
     BUILD_ARGS=()
+    # NVIDIA=Y builds the NVIDIA edition (lindle-nvidia).
+    if [[ "${NVIDIA:-N}" == Y ]]; then
+        BUILD_ARGS+=("--build-arg" "NVIDIA=Y")
+    fi
     LABELS=()
     if [[ -z "$(git status -s)" ]]; then
         GIT_SHA=$(git rev-parse --short HEAD)
