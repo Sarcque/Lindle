@@ -48,6 +48,11 @@ systemctl enable livesys.service livesys-late.service
 dnf install -y --allowerasing anaconda-live anaconda-webui firefox rsync libblockdev-{btrfs,lvm,dm}
 mkdir -p /var/lib/rpm-state
 
+# Lindle logo and colors in the installer.
+branding=/usr/share/cockpit/branding/fedora-lindle
+install -D -m 0644 /src/branding/branding.css "$branding/branding.css"
+install -m 0644 /usr/share/pixmaps/lindle-logo.svg "$branding/logo.svg"
+
 cat >/etc/anaconda/conf.d/90-lindle.conf <<'EOF'
 [Network]
 default_on_boot = FIRST_WIRED_WITH_LINK
