@@ -48,6 +48,7 @@ type_text() {
         case "$ch" in
             " ") monitor "sendkey spc" ;;
             "-") monitor "sendkey minus" ;;
+            "_") monitor "sendkey shift-minus" ;;
             ".") monitor "sendkey dot" ;;
             *) monitor "sendkey $ch" ;;
         esac
