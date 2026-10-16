@@ -1,0 +1,3 @@
+[Flatpak Preinstall org.gnome.World.PikaBackup]
+Branch=stable
+IsRuntime=false

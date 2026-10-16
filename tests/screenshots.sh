@@ -124,4 +124,4 @@ run_command "lindle-layout windows" 13-layout-windows 10
 # Windows-style safety tools
 open_app "lindle-restore" 14-restore 10
 open_app "kcmshell6 kcm_firewall" 15-firewall 15
-open_app "kcmshell6 kcm_kup" 16-backups 15
+open_app "pika backup" 16-backups 20

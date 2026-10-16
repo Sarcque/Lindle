@@ -18,8 +18,6 @@ packages=(
     # Firewall page in System Settings (firewalld is the firewall itself)
     plasma-firewall
     firewalld
-    # Backups page in System Settings: scheduled backups to an external drive
-    kup
     # Phone link: notifications, files and clipboard between phone and PC
     kde-connect
     # Screen reader
