@@ -1,0 +1,25 @@
+#!/bin/bash
+# Switch the desktop between Lindle's two layouts, keeping everything else
+# (theme, wallpaper, apps) as it is.
+#
+#   lindle-layout windows   bottom taskbar with the start menu (the default)
+#   lindle-layout mac       top bar with menus and clock, centered dock
+
+set -euo pipefail
+
+case "${1:-}" in
+    windows)
+        layout=/usr/share/plasma/look-and-feel/org.lindle.desktop/contents/layouts/org.kde.plasma.desktop-layout.js ;;
+    mac)
+        layout=/usr/share/lindle/layouts/mac.js ;;
+    *)
+        echo "usage: lindle-layout windows|mac" >&2
+        exit 2 ;;
+esac
+
+# Remove the current panels, then build the chosen ones.
+script="panels().forEach(function (p) { p.remove(); });
+$(cat "$layout")"
+
+busctl --user call org.kde.plasmashell /PlasmaShell org.kde.PlasmaShell \
+    evaluateScript s "$script" >/dev/null
