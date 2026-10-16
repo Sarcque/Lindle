@@ -1,6 +1,7 @@
 #!/bin/bash
-# Boot a Lindle VM disk in QEMU and save screenshots of the login screen, the
-# boot splash, the Welcome Center, the desktop, the start menu and the preinstalled apps.
+# Boot a Lindle VM disk in QEMU and save screenshots of the boot splash, the
+# login screen, the Welcome Center, the desktop, the start menu and the
+# preinstalled apps.
 #
 #   tests/screenshots.sh <disk.raw> <output-dir>
 #
