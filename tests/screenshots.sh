@@ -96,6 +96,7 @@ open_app() {
     sleep 3
 }
 
+open_app "plasma-welcome --pages 05-layout.qml" 05a-welcome-layout 15
 open_app "plasma-welcome --pages 10-apps.qml" 05-welcome-apps 15
 open_app "plasma-welcome --pages 20-switching.qml" 06-welcome-switching 15
 open_app wordcraft 07-wordcraft 30
@@ -104,3 +105,18 @@ open_app photocraft 09-photocraft 30
 open_app "system settings" 10-settings 20
 # The app store is a Flatpak installed on first boot, so it comes last.
 open_app bazaar 11-app-store 40
+
+run_command() {
+    # Like open_app, for commands that open no window.
+    monitor "sendkey alt-spc"
+    sleep 3
+    type_text "$1"
+    sleep 3
+    monitor "sendkey ret"
+    sleep "$3"
+    shot "$2"
+}
+
+# Layout switching from the Welcome Center's "Choose your layout" page.
+run_command "lindle-layout mac" 12-layout-mac 10
+run_command "lindle-layout windows" 13-layout-windows 10

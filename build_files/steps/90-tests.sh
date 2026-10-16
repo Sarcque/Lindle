@@ -28,6 +28,9 @@ grep -q 'LookAndFeelPackage=org.lindle.desktop' /usr/share/kde-settings/kde-prof
 test -f /usr/lib/plasmalogin/plasmalogin.conf.d/50-lindle.conf
 test -f /usr/share/plasma/plasma-welcome/intro-customization.desktop
 test -f /usr/share/plasma/plasma-welcome/extra-pages/10-apps.qml
+test -f /usr/share/plasma/plasma-welcome/extra-pages/05-layout.qml
+test -x /usr/bin/lindle-layout
+test -f /usr/share/lindle/layouts/mac.js
 test -f /usr/share/icons/Colloid-Light/index.theme
 test -f /usr/share/icons/Lindle/index.theme
 test -f /usr/share/icons/Lindle-Dark/index.theme
