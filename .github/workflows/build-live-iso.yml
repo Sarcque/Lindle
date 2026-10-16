@@ -57,7 +57,15 @@ jobs:
           iso-dest: ${{ github.workspace }}/output/lindle-live.iso
 
       - name: Checksum
+        env:
+          ISO: ${{ steps.iso.outputs.iso_dest }}
         run: |
+          # titanoboa resolves iso-dest from its own folder, so the ISO can
+          # land outside output/. Move it to where the next steps expect it.
+          echo "titanoboa wrote $ISO"
+          if [ "$(realpath "$ISO")" != "$(realpath -m output/lindle-live.iso)" ]; then
+            mv "$ISO" output/lindle-live.iso
+          fi
           cd output
           sha256sum lindle-live.iso | tee lindle-live.iso-CHECKSUM
           ls -lh
