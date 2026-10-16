@@ -1,0 +1,23 @@
+#!/bin/bash
+# Go back to the version of Lindle from before the last update, like
+# Windows' System Restore. Files, settings and apps are not touched.
+
+set -euo pipefail
+
+kdialog --title "Restore Previous Version" --warningcontinuecancel \
+    "Go back to the version of Lindle you had before the last update?
+
+Your files, settings and apps stay as they are. Your computer restarts to finish." \
+    --continue-label "Restore" || exit 0
+
+if ! output=$(rpm-ostree rollback 2>&1); then
+    kdialog --title "Restore Previous Version" --error "Lindle could not go back to the previous version.
+
+$output"
+    exit 1
+fi
+
+if kdialog --title "Restore Previous Version" --yesno "The previous version will be used after a restart. Restart now?" \
+    --yes-label "Restart now" --no-label "Later"; then
+    busctl --user call org.kde.Shutdown /Shutdown org.kde.Shutdown logoutAndReboot
+fi

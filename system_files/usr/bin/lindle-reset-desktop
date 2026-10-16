@@ -1,0 +1,26 @@
+#!/bin/bash
+# Put the desktop back the way Lindle ships it: panels, theme, shortcuts and
+# window settings. Like Windows' "Reset this PC" for settings, but files and
+# apps are kept. The old settings are moved aside, not deleted.
+
+set -euo pipefail
+
+kdialog --title "Reset Desktop Settings" --warningcontinuecancel \
+    "Reset the desktop to how Lindle looks when you first start it?
+
+Your files and apps stay. Your current settings are saved in a backup folder, and you are logged out to finish." \
+    --continue-label "Reset" || exit 0
+
+config="${XDG_CONFIG_HOME:-$HOME/.config}"
+backup="$HOME/.local/share/lindle/settings-backup-$(date +%Y%m%d-%H%M%S)"
+mkdir -p "$backup"
+
+for f in \
+    plasma-org.kde.plasma.desktop-appletsrc plasmashellrc plasmarc \
+    kdeglobals kwinrc kwinrulesrc kglobalshortcutsrc khotkeysrc \
+    ksplashrc kscreenlockerrc kcminputrc ksmserverrc \
+    dolphinrc konsolerc gtkrc gtkrc-2.0 gtk-3.0 gtk-4.0; do
+    [[ -e "$config/$f" ]] && mv "$config/$f" "$backup/"
+done
+
+busctl --user call org.kde.Shutdown /Shutdown org.kde.Shutdown logout
