@@ -1,5 +1,4 @@
 const { REPO_URL } = require('../lib/layout');
-const line = (t) => `<span class="line"><span>${t}</span></span>`;
 
 module.exports = {
   path: '/download',
@@ -7,31 +6,23 @@ module.exports = {
   bodyClass: 'sub',
   description: 'Download the Lindle installer, or switch an existing Fedora Atomic machine to Lindle.',
   body: `
-    <section class="sub-hero">
-      <div class="wrap">
-        <p class="mono kicker rv">Download</p>
-        <h1 class="display">${line('Get <em>Lindle.</em>')}</h1>
-        <p class="lead rv" style="--d:2">Lindle 0.1 is an early preview. Try it in a virtual machine or on a spare computer. It is not ready for daily use yet.</p>
-      </div>
+    <section class="wrap sub-head">
+      <h1 class="rise">Download Lindle</h1>
+      <p class="lead rise" style="--d:1">Lindle 0.1 is an early preview. We’ve only tried it in virtual machines, so please start there and don’t install it on a computer you depend on.</p>
     </section>
 
-    <section class="wrap paths">
-      <article class="path rv">
-        <p class="mono num">Option A</p>
-        <h2>Install from a USB stick</h2>
-        <ol class="steps">
-          <li>Download the latest ISO from the <strong>Build disk images</strong> workflow.</li>
-          <li>Write it to a USB stick with Fedora Media Writer or balenaEtcher.</li>
-          <li>Restart your computer and boot from the stick.</li>
-        </ol>
-        <a class="btn" href="${REPO_URL}/actions/workflows/build-disk.yml">Latest installer builds <span aria-hidden="true">→</span></a>
-      </article>
-      <article class="path rv" style="--d:2">
-        <p class="mono num">Option B</p>
-        <h2>Switch from Fedora Atomic</h2>
-        <p>Already on Kinoite, Silverblue or Universal Blue? One command, then restart. Your files and Flatpak apps stay where they are.</p>
-        <pre><code>sudo bootc switch ghcr.io/sarcque/lindle:latest</code></pre>
-      </article>
+    <section class="wrap prose-section narrow">
+      <h2 class="rise">Install it from an ISO</h2>
+      <ol class="steps rise">
+        <li>Open the <a href="${REPO_URL}/actions/workflows/build-disk.yml">Build disk images</a> workflow on GitHub and download the ISO from the latest run. GitHub asks you to sign in to download workflow files.</li>
+        <li>Create a virtual machine in GNOME Boxes, VirtualBox or similar, and boot it from the ISO. For a real computer, write the ISO to a USB stick with Fedora Media Writer or balenaEtcher.</li>
+        <li>Follow the installer, then restart.</li>
+      </ol>
+
+      <h2 class="rise">Switch from Fedora Atomic</h2>
+      <p class="rise">If you already run Fedora Kinoite, Silverblue or a Universal Blue image, you can switch with one command and restart. Your files and Flatpak apps stay as they are.</p>
+      <pre class="rise"><code>sudo bootc switch ghcr.io/sarcque/lindle:latest</code></pre>
+      <p class="small rise">To go back, use <code>sudo bootc rollback</code> or pick the previous entry in the boot menu.</p>
     </section>
 `,
 };

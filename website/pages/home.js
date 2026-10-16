@@ -1,85 +1,80 @@
-const chapters = [
+const { REPO_URL } = require('../lib/layout');
+
+const tour = [
   {
-    n: '01',
-    title: 'Twelve apps on the first boot',
-    text: 'WordCraft, GridCraft, DeckCraft and PhotoCraft are pinned to the dock. Firefox, Thunderbird, GIMP, Inkscape, Krita, VLC, ONLYOFFICE and Bottles install themselves in the background. You open the lid and start working.',
+    title: 'Office and photo apps are already there',
+    text: 'There’s a word processor (WordCraft), a spreadsheet (GridCraft), a presentation app (DeckCraft) and a photo editor (PhotoCraft). They’re meant to replace Word, Excel, PowerPoint and Photoshop. ONLYOFFICE is installed too, for documents that need it.',
     img: 'wordcraft.webp',
     alt: 'WordCraft, the word processor that comes with Lindle',
   },
   {
-    n: '02',
-    title: 'A start menu that behaves like one',
-    text: 'Applications are grouped the way you would expect, search starts the moment you type, and the power buttons are where your hand goes looking for them.',
+    title: 'The start menu works like you’d expect',
+    text: 'Apps are sorted into categories, search starts as soon as you type, and sleep, restart and shut down are at the bottom. If you’d rather have a dock and a menu bar at the top, you can pick that in the Welcome Center.',
     img: 'start-menu.webp',
     alt: 'The Lindle start menu',
   },
   {
-    n: '03',
-    title: 'Everything else is one click away',
-    text: 'The app store is Discover, pointed at Flathub only. No snaps, no ads, no account. Apps update in the background next to the OS.',
+    title: 'More apps come from one store',
+    text: 'The app store only shows apps from Flathub. Firefox, Thunderbird, GIMP, Inkscape, Krita, VLC and Bottles are installed the first time you boot, and they update themselves along with the system.',
     img: 'app-store.webp',
     alt: 'The Lindle app store',
   },
   {
-    n: '04',
-    title: 'Settings that read like English',
-    text: 'Light or dark, accent, wallpaper, display scaling. The defaults are already tuned, so most people never open this window twice.',
+    title: 'Settings are the ones from KDE Plasma',
+    text: 'We haven’t reinvented System Settings. It’s Plasma’s own, with our light and dark themes, our wallpaper and the accent colour already set.',
     img: 'settings.webp',
     alt: 'System Settings in Lindle',
   },
 ];
 
-const details = [
-  ['Atomic updates', 'The OS downloads as one image and switches over on the next restart. Nothing is half-installed.'],
-  ['Codecs included', 'H.264, H.265 and AAC play out of the box, courtesy of the Universal Blue base.'],
-  ['Calibri and Cambria, in spirit', 'Carlito and Caladea have the same metrics, so a .docx from a colleague keeps its page breaks.'],
-  ['One source of truth', 'Colors, type and spacing live in a single tokens file. The desktop and this site both read it.'],
-  ['Built on Fedora KDE', 'Plasma 6 on Fedora Kinoite, delivered with bootc and built by CI on every change.'],
-  ['Open all the way down', 'Apache-2.0 code and CC BY-SA artwork. Read it, fork it, send a patch.'],
+const faq = [
+  ['Will my Word and Excel files look right?', 'Mostly, yes. Lindle ships Carlito and Caladea, which have the same letter widths as Calibri and Cambria, so page breaks stay where they were. Very complicated documents can still differ, and for those there’s ONLYOFFICE.'],
+  ['Can I run my Windows programs?', 'Some of them. Bottles is installed and runs many Windows apps, but not all. Check whether your must-have program works before you switch.'],
+  ['What happens if an update breaks something?', 'Lindle keeps the previous version of the system next to the new one. You pick it in the boot menu and you’re back where you were. Your files aren’t touched either way.'],
+  ['Does it cost anything?', 'No. It’s open source, and there’s no account or subscription.'],
+  ['Will it run on my laptop?', 'We don’t know yet. We’ve only tried it in virtual machines so far, so start there. Testing on real hardware is planned for 0.4.'],
+  ['Why does it have its own wallpaper and colours?', 'Because we’d like it to look finished. The colours, fonts and spacing live in one file in the repository, and the desktop and this website both read from it.'],
 ];
 
-const line = (t, cls = '') => `<span class="line ${cls}"><span>${t}</span></span>`;
+const notYet = [
+  'A graphics driver image for NVIDIA cards',
+  'Importing your files and bookmarks from a Windows disk',
+  'An option to use Mac-style keyboard shortcuts',
+  'Testing on real laptops and desktops',
+  'An accessibility check (contrast, screen readers, keyboard use)',
+  'Signed images. They’re currently built without a signature.',
+];
 
 module.exports = {
   path: '/',
   bodyClass: 'home',
   description:
-    'Lindle is a modern, open source Linux desktop for people coming from macOS and Windows. Twelve apps on the first boot, updates that undo themselves.',
+    'Lindle is an open source Linux desktop for people coming from Windows or macOS. It comes with office and photo apps and updates itself. Version 0.1, early preview.',
   body: `
     <section class="hero">
-      <div class="wrap hero-grid">
-        <p class="mono kicker rv" style="--d:0">Lindle 0.1 · early preview · open source</p>
-        <h1 class="display">
-          ${line('Linux that', 'l1')}
-          ${line('feels like <em>home.</em>', 'l2')}
-        </h1>
-        <div class="hero-side rv" style="--d:3">
-          <p class="lead">A desktop for people leaving Windows or macOS. Twelve apps are there on the first boot, updates install themselves, and if one goes wrong you boot the previous version.</p>
-          <div class="actions">
-            <a class="btn" href="/download">Download Lindle <span aria-hidden="true">→</span></a>
-            <a class="textlink" href="#layouts">See the layouts</a>
-          </div>
-        </div>
+      <div class="wrap">
+        <h1 class="rise">A Linux desktop for people coming from Windows or macOS</h1>
+        <p class="lead rise" style="--d:1">Lindle is an open source operating system. It starts with a taskbar or a dock you already know, comes with a word processor, a spreadsheet, a presentation app and a photo editor, and updates itself in the background. It’s version 0.1, so expect rough edges.</p>
+        <p class="rise" style="--d:2"><a class="button" href="/download">Download Lindle</a> <a class="plain" href="${REPO_URL}">or look at the source</a></p>
       </div>
 
-      <div class="wrap stage-wrap rv" style="--d:4" id="layouts">
-        <div class="switch" role="group" aria-label="Preview a layout">
-          <span class="mono switch-label">Feels like</span>
-          <button type="button" data-layout="windows" aria-pressed="true">Windows</button>
-          <button type="button" data-layout="mac" aria-pressed="false">macOS</button>
-          <button type="button" data-layout="lindle" aria-pressed="false">Lindle</button>
+      <div class="wrap stage rise" style="--d:3">
+        <div class="tabs" role="group" aria-label="Preview a layout">
+          <button type="button" data-layout="windows" aria-pressed="true">Windows-style</button>
+          <button type="button" data-layout="mac" aria-pressed="false">Mac-style</button>
+          <button type="button" data-layout="lindle" aria-pressed="false">Lindle’s own</button>
         </div>
-        <div class="desk" data-layout="windows" role="img" aria-label="An illustration of the Lindle desktop that switches between a Windows-like and a Mac-like layout">
+        <div class="desk" data-layout="windows" role="img" aria-label="A drawing of the Lindle desktop that changes between a Windows-style, a Mac-style and Lindle's own layout">
           <picture>
             <source srcset="/img/wall-dark.webp" media="(prefers-color-scheme: dark)">
             <img class="desk-wall" src="/img/wall-light.webp" alt="" width="2400" height="1350">
           </picture>
           <div class="topbar">
             <span class="tb-left"><img src="/logo.svg" alt="" width="14" height="14"><b>Lindle</b><i>File</i><i>Edit</i><i>View</i></span>
-            <span class="tb-right mono">Mon 9:41</span>
+            <span class="tb-right">Mon 9:41</span>
           </div>
           <div class="appwin">
-            <div class="appwin-bar"><span class="dots"><i></i><i></i><i></i></span><span class="mono">Quarterly plan.docx</span></div>
+            <div class="appwin-bar"><span class="dots"><i></i><i></i><i></i></span><span>Quarterly plan.docx</span></div>
             <div class="appwin-body">
               <div class="sheet">
                 <h6></h6><p></p><p></p><p class="short"></p><p></p><p class="short"></p>
@@ -91,26 +86,18 @@ module.exports = {
             <span class="apps">
               <i class="a-word"></i><i class="a-grid"></i><i class="a-deck"></i><i class="a-photo"></i><i class="a-fox"></i>
             </span>
-            <span class="tray mono">9:41</span>
+            <span class="tray">9:41</span>
           </div>
         </div>
-        <p class="caption mono">Pick the layout in the Welcome Center. Change your mind whenever you like.</p>
+        <p class="note">This is a drawing, not a screenshot. Real screenshots are further down the page. You choose the layout the first time you log in and can change it later.</p>
       </div>
     </section>
 
-    <section class="facts wrap">
-      <div class="rv"><b>12</b><span>apps installed on the first boot</span></div>
-      <div class="rv" style="--d:1"><b>2</b><span>familiar layouts to start from</span></div>
-      <div class="rv" style="--d:2"><b>1</b><span>previous version always kept to go back to</span></div>
-      <div class="rv" style="--d:3"><b>0</b><span>update prompts while you work</span></div>
-    </section>
-
-    <section class="chapters wrap" aria-label="What is inside">
-      <div class="chapter-texts">
-${chapters
+    <section class="tour wrap" aria-label="What’s inside">
+      <div class="tour-texts">
+${tour
   .map(
-    (c, i) => `        <article class="chapter${i === 0 ? ' active' : ''}" data-i="${i}">
-          <p class="mono num">${c.n} / 04</p>
+    (c, i) => `        <article class="step${i === 0 ? ' active' : ''}" data-i="${i}">
           <h2>${c.title}</h2>
           <p>${c.text}</p>
           <figure class="inline-shot"><img src="/img/${c.img}" alt="${c.alt}" width="1280" height="800" loading="lazy"></figure>
@@ -118,44 +105,50 @@ ${chapters
   )
   .join('\n')}
       </div>
-      <div class="chapter-stage" aria-hidden="true">
+      <div class="tour-stage" aria-hidden="true">
         <div class="frame">
-${chapters.map((c, i) => `          <img class="${i === 0 ? 'on' : ''}" src="/img/${c.img}" alt="" width="1280" height="800" loading="lazy">`).join('\n')}
+${tour.map((c, i) => `          <img class="${i === 0 ? 'on' : ''}" src="/img/${c.img}" alt="" width="1280" height="800" loading="lazy">`).join('\n')}
         </div>
       </div>
     </section>
 
-    <section class="undo" id="undo">
+    <section class="undo">
       <div class="wrap undo-grid">
-        <div class="undo-copy rv">
-          <p class="mono kicker">Updates</p>
-          <h2 class="display sm">Every update<br>comes with an <em>undo.</em></h2>
-          <p class="lead">Lindle updates as a whole image and keeps the previous one next to it. If today's update misbehaves, pick yesterday's entry in the boot menu and carry on.</p>
+        <div class="undo-copy rise">
+          <h2>If an update goes wrong, you go back</h2>
+          <p>Lindle installs updates as a whole new copy of the system and keeps the old one. The new copy only takes over after a restart. If it doesn’t behave, choose the previous entry in the boot menu.</p>
+          <p class="small">The panel on the right is a small simulation of that menu.</p>
         </div>
-        <div class="boot rv" style="--d:2" data-boot aria-label="Illustration of the boot menu">
-          <div class="boot-head mono">Boot menu</div>
-          <ul class="boot-list mono">
-            <li class="sel" data-entry="new"><span>Lindle · today's update</span><em>broken</em></li>
-            <li data-entry="old"><span>Lindle · previous version</span><em>kept</em></li>
+        <div class="boot rise" style="--d:2" data-boot aria-label="A simulation of the boot menu">
+          <div class="boot-head">Boot menu</div>
+          <ul class="boot-list">
+            <li class="sel" data-entry="new"><span>Lindle (today’s update)</span><em>won’t start</em></li>
+            <li data-entry="old"><span>Lindle (previous version)</span><em>works</em></li>
           </ul>
-          <div class="boot-log mono" aria-live="polite"></div>
-          <button class="boot-replay mono" type="button">Replay</button>
+          <div class="boot-log" aria-live="polite"></div>
+          <button class="boot-replay" type="button">Play again</button>
         </div>
       </div>
     </section>
 
-    <section class="details wrap">
-      <h2 class="display sm rv">The small print,<br>written down.</h2>
-      <dl>
-${details.map(([t, d], i) => `        <div class="row rv" style="--d:${i % 3}"><dt>${t}</dt><dd>${d}</dd></div>`).join('\n')}
-      </dl>
+    <section class="wrap faq">
+      <h2>Questions people ask</h2>
+${faq.map(([q, a]) => `      <details class="rise"><summary>${q}</summary><p>${a}</p></details>`).join('\n')}
     </section>
 
-    <section class="closer">
-      <div class="wrap">
-        <p class="mono kicker rv">Version 0.1</p>
-        <a class="closer-link rv" href="/download"><span>Try it on a spare machine</span><span class="arrow" aria-hidden="true">→</span></a>
-      </div>
+    <section class="wrap notyet rise">
+      <h2>What isn’t there yet</h2>
+      <p>Lindle is at the start. These are things we know are missing:</p>
+      <ul>
+${notYet.map((t) => `        <li>${t}</li>`).join('\n')}
+      </ul>
+      <p>The full list is in the <a href="${REPO_URL}/blob/main/docs/plan.md">plan</a>.</p>
+    </section>
+
+    <section class="wrap try rise">
+      <h2>Want to try it?</h2>
+      <p>The easiest way is in a virtual machine. You can switch back whenever you like.</p>
+      <p><a class="button" href="/download">Go to the download page</a></p>
     </section>
 `,
 };

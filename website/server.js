@@ -17,9 +17,9 @@ function createApp() {
 
   const fontDir = (pkg) => path.dirname(require.resolve(`${pkg}/package.json`));
   const fonts = {
-    inter: '@fontsource-variable/inter',
+    'schibsted-grotesk': '@fontsource-variable/schibsted-grotesk',
+    'funnel-display': '@fontsource/funnel-display',
     'jetbrains-mono': '@fontsource-variable/jetbrains-mono',
-    'instrument-serif': '@fontsource/instrument-serif',
   };
   for (const [name, pkg] of Object.entries(fonts)) {
     app.use(`/fonts/${name}`, express.static(fontDir(pkg), { maxAge: '30d' }));
@@ -37,10 +37,10 @@ function createApp() {
         title: 'Page not found',
         description: 'This page does not exist.',
         body: `
-    <section class="sub-hero"><div class="wrap">
+    <section class="wrap sub-head">
       <h1>Page not found</h1>
       <p class="lead">This page does not exist. <a href="/">Go to the home page</a>.</p>
-    </div></section>`,
+    </section>`,
       }),
     );
   });

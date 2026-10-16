@@ -2,7 +2,7 @@
 
 A small Express site with four pages: home, features, download and about.
 
-Colors, radii, spacing and motion come straight from [`design/tokens.json`](../design/tokens.json): the server turns them into CSS variables at `/tokens.css`, so the site always matches the OS theme, in light and dark mode. The logo is served from [`design/logo`](../design/logo). Type is Inter for text (the Lindle UI face), Instrument Serif for display headings and JetBrains Mono for small labels, all self-hosted from npm so the site loads nothing from third parties.
+Colors, radii, spacing and motion come straight from [`design/tokens.json`](../design/tokens.json): the server turns them into CSS variables at `/tokens.css`, so the site always matches the OS theme, in light and dark mode. The logo is served from [`design/logo`](../design/logo). Headings use Funnel Display and text uses Schibsted Grotesk (the OS itself uses Inter); JetBrains Mono is for code. All fonts are self-hosted from npm, so the site loads nothing from third parties.
 
 ```bash
 cd website
@@ -20,7 +20,7 @@ lib/tokens.js    design/tokens.json -> CSS variables
 lib/layout.js    Shared page shell: header, nav, footer
 pages/*.js       One file per page: path, title, description, body
 public/css/      Site stylesheet
-public/js/       Scroll reveals, layout switcher, boot-menu demo (no dependencies)
+public/js/       Entrance fades, layout switcher, tour and boot-menu demo (no dependencies)
 public/img/      OS screenshots and wallpapers (WebP)
 ```
 
