@@ -1,6 +1,7 @@
 #!/bin/bash
-# Boot a Lindle VM disk in QEMU and save screenshots of the login screen, the
-# Welcome Center, the desktop, the start menu and the preinstalled apps.
+# Boot a Lindle VM disk in QEMU and save screenshots of the boot splash, the
+# login screen, the Welcome Center, the desktop, the start menu and the
+# preinstalled apps.
 #
 #   tests/screenshots.sh <disk.raw> <output-dir>
 #
@@ -56,8 +57,14 @@ type_text() {
 
 trap 'kill "$(cat "$work/qemu.pid")" 2>/dev/null || true' EXIT
 
+# Boot splash, while the system starts.
+for i in 1 2 3; do
+    sleep 8
+    shot "00-boot-$i"
+done
+
 # First boot runs setup services and starts Flatpak installs in the background.
-sleep 240
+sleep 216
 shot 01-login
 
 type_text lindle

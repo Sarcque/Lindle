@@ -1,0 +1,2 @@
+# Show the Lindle boot splash instead of kernel messages.
+kargs = ["rhgb", "quiet", "splash"]

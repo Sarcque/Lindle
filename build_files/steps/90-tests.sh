@@ -38,6 +38,7 @@ test -f /etc/bazaar/config.yaml
 test -f /etc/bazaar/banner-light.png
 grep -q "ai.storyteller.wordcraft" /usr/share/kde-settings/kde-profile/default/xdg/kicker-extra-favoritesrc
 grep -q "^NoDisplay=true" /usr/share/applications/org.kde.discover.desktop
+[[ "$(plymouth-set-default-theme)" == lindle ]]
 
 # fc-match prints one short line, so grep -q cannot SIGPIPE the producer under pipefail.
 fc-match -f "%{family}\n" "Inter" | grep -qi "^Inter"
