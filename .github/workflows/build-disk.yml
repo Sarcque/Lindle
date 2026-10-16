@@ -32,7 +32,7 @@ concurrency:
 jobs:
   build:
     name: Build disk images
-    runs-on: ${{ inputs.platform == 'arm64' && 'ubuntu-26.04-arm' || 'ubuntu-26.04' }}
+    runs-on: ${{ inputs.platform == 'arm64' && 'ubuntu-24.04-arm' || 'ubuntu-24.04' }}
     strategy:
       fail-fast: false
       matrix:
@@ -69,13 +69,6 @@ jobs:
         uses: ublue-os/remove-unwanted-software@695eb75bc387dbcd9685a8e72d23439d8686cba6
         with:
           remove-codeql: true
-
-      - name: Allow osbuild sandboxes
-        # Ubuntu's AppArmor blocks the user namespaces osbuild's bubblewrap
-        # sandboxes need, which makes every stage fail with "mount: permission denied".
-        run: |
-          sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0
-          sudo sysctl -w kernel.apparmor_restrict_unprivileged_unconfined=0 || true
 
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
