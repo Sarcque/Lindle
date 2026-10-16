@@ -61,3 +61,8 @@ desktop-file-validate /usr/share/applications/lindle-restore.desktop
 desktop-file-validate /usr/share/applications/lindle-reset-desktop.desktop
 rpm -q plasma-firewall kde-connect orca liberation-sans-fonts jq kdialog
 grep -q '^application/x-ms-dos-executable=com.usebottles.bottles.desktop' /etc/xdg/mimeapps.list
+
+# NVIDIA edition: the driver's kernel module is installed.
+if [[ "${NVIDIA:-N}" == Y ]]; then
+    rpm -qa 'kmod-nvidia*' | grep -q .
+fi
