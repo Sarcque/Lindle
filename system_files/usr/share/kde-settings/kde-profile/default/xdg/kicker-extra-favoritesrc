@@ -1,0 +1,4 @@
+# Start menu favorites for new users (replaces Fedora's list).
+[General]
+Prepend=preferred://browser;org.kde.dolphin.desktop;ai.storyteller.wordcraft.desktop;ai.storyteller.gridcraft.desktop;ai.storyteller.deckcraft.desktop;ai.storyteller.photocraft.desktop;io.github.kolunmi.Bazaar.desktop;systemsettings.desktop;
+IgnoreDefaults=true

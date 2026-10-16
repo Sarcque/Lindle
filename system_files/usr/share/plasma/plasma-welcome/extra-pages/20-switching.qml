@@ -26,7 +26,7 @@ Welcome.Page {
                 ["Start menu or Launchpad", "The Lindle button at the left of the dock, or press the Windows or ⌘ key"],
                 ["Search or Spotlight", "Press Alt+Space and start typing an app, file or setting"],
                 ["File Explorer or Finder", "Files, pinned to the dock"],
-                ["Microsoft Store or App Store", "Discover, pinned to the dock"],
+                ["Microsoft Store or App Store", "The Lindle App Store (Bazaar), pinned to the dock"],
                 ["Control Panel or System Settings", "System Settings, in the start menu"],
                 ["Windows Update or Software Update", "Nothing to do: updates install in the background and apply on restart"]
             ]

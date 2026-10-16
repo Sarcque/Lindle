@@ -1,0 +1,73 @@
+# The app store's front page. Every app here is on Flathub.
+rows:
+  - banner:
+      height: 220
+      image:
+        light-uri: file:///run/host/etc/bazaar/banner-light.png
+        dark-uri: file:///run/host/etc/bazaar/banner-dark.png
+        fit: cover
+        alt: "Lindle App Store"
+        can-shrink: true
+  - section:
+      title: "Everyday essentials"
+      subtitle:
+        string: "Browsers, chat, music and video calls."
+      appids:
+        list:
+          - org.mozilla.firefox
+          - com.google.Chrome
+          - org.mozilla.Thunderbird
+          - com.spotify.Client
+          - com.discordapp.Discord
+          - us.zoom.Zoom
+          - org.signal.Signal
+          - org.telegram.desktop
+          - com.slack.Slack
+          - com.bitwarden.desktop
+          - org.videolan.VLC
+          - com.obsproject.Studio
+  - section:
+      title: "Work and school"
+      subtitle:
+        string: "Office suites, notes and tools that open the files you already have."
+      appids:
+        list:
+          - org.onlyoffice.desktopeditors
+          - org.libreoffice.LibreOffice
+          - md.obsidian.Obsidian
+          - com.github.IsmaelMartinez.teams_for_linux
+          - org.kde.okular
+          - org.gnome.Calendar
+  - section:
+      title: "Create"
+      subtitle:
+        string: "Photos, drawing, video, music and 3D."
+      appids:
+        list:
+          - org.gimp.GIMP
+          - org.kde.krita
+          - org.inkscape.Inkscape
+          - org.darktable.Darktable
+          - org.kde.kdenlive
+          - org.blender.Blender
+          - org.audacityteam.Audacity
+          - fr.handbrake.ghb
+  - section:
+      title: "Play"
+      subtitle:
+        string: "Your game libraries, including many Windows games."
+      appids:
+        list:
+          - com.valvesoftware.Steam
+          - com.heroicgameslauncher.hgl
+          - net.lutris.Lutris
+          - org.prismlauncher.PrismLauncher
+          - org.libretro.RetroArch
+  - section:
+      title: "Coming from Windows?"
+      subtitle:
+        string: "Bottles runs many Windows programs right on Lindle."
+      list-type: rich
+      appids:
+        list:
+          - com.usebottles.bottles

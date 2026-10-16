@@ -1,0 +1,34 @@
+[Icon Theme]
+Name=Lindle-Dark
+Comment=Lindle's icons: Colloid with Lindle's logo and launcher on top
+Inherits=Colloid-Dark,breeze-dark,hicolor
+Example=folder
+
+DesktopDefault=48
+DesktopSizes=16,22,32,48,64,96,128,256
+ToolbarDefault=22
+ToolbarSizes=16,22,32,48
+MainToolbarDefault=22
+MainToolbarSizes=16,22,32,48
+SmallDefault=16
+SmallSizes=16,22,32,48
+PanelDefault=48
+PanelSizes=16,22,32,48,64,96,128,256
+DialogDefault=32
+DialogSizes=16,22,32,48,64,96,128,256
+
+Directories=scalable/apps,scalable/places
+
+[scalable/apps]
+Size=48
+MinSize=16
+MaxSize=512
+Context=Applications
+Type=Scalable
+
+[scalable/places]
+Size=48
+MinSize=16
+MaxSize=512
+Context=Places
+Type=Scalable
