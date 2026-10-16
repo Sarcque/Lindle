@@ -57,15 +57,13 @@ jobs:
           iso-dest: ${{ github.workspace }}/output/lindle-live.iso
 
       - name: Checksum
-        env:
-          ISO: ${{ steps.iso.outputs.iso_dest }}
         run: |
-          # titanoboa resolves iso-dest from its own folder, so the ISO can
-          # land outside output/. Move it to where the next steps expect it.
-          echo "titanoboa wrote $ISO"
-          if [ "$(realpath "$ISO")" != "$(realpath -m output/lindle-live.iso)" ]; then
-            mv "$ISO" output/lindle-live.iso
-          fi
+          # titanoboa resolves iso-dest from its own folder under _actions, so
+          # the ISO lands there. Move it to where the next steps expect it.
+          actions="$(dirname "$(dirname "$GITHUB_WORKSPACE")")/_actions"
+          iso="$(find output "$actions/ublue-os/titanoboa" -name lindle-live.iso -print -quit)"
+          echo "titanoboa wrote $iso"
+          [ "$iso" = output/lindle-live.iso ] || mv "$iso" output/lindle-live.iso
           cd output
           sha256sum lindle-live.iso | tee lindle-live.iso-CHECKSUM
           ls -lh
