@@ -11,7 +11,7 @@ set -exo pipefail
 SRC="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 : "${IMAGE:?}"
 # What installed systems follow for updates.
-UPDATE_REF=ghcr.io/sarcque/lindle:latest
+UPDATE_REF="${UPDATE_REF:-ghcr.io/sarcque/lindle:latest}"
 
 mkdir -p "$(realpath /root)"
 # bwrap (used by flatpak) writes /proc/sys/user/max_user_namespaces.

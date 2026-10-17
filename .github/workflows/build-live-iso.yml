@@ -23,13 +23,19 @@ concurrency:
 
 jobs:
   build:
-    name: Build and boot the live ISO
+    name: Build and boot the live ISO${{ matrix.edition && ' (NVIDIA)' || '' }}
     runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        # '' is the standard edition, '-nvidia' the NVIDIA edition.
+        edition: ['', '-nvidia']
     permissions:
       contents: write
       packages: read
     env:
-      IMAGE: ghcr.io/${{ github.repository_owner }}/lindle:latest
+      IMAGE: ghcr.io/${{ github.repository_owner }}/lindle${{ matrix.edition }}:latest
+      ISO: lindle${{ matrix.edition }}-live.iso
     steps:
       - name: Maximize build space
         uses: ublue-os/remove-unwanted-software@695eb75bc387dbcd9685a8e72d23439d8686cba6
@@ -45,7 +51,8 @@ jobs:
       - name: Build the live system
         run: |
           sudo podman build --cap-add sys_admin --security-opt label=disable \
-            --build-arg IMAGE="$IMAGE" -t localhost/lindle-live:latest iso/
+            --build-arg IMAGE="$IMAGE" --build-arg UPDATE_REF="$IMAGE" \
+            -t localhost/lindle-live:latest iso/
           # titanoboa resolves iso-dest with realpath, which needs the folder.
           mkdir -p output
 
@@ -54,18 +61,18 @@ jobs:
         uses: ublue-os/titanoboa@5c457c3d0518bd17e754be0fd98a60d29d26abb4
         with:
           image-ref: localhost/lindle-live:latest
-          iso-dest: ${{ github.workspace }}/output/lindle-live.iso
+          iso-dest: ${{ github.workspace }}/output/${{ env.ISO }}
 
       - name: Checksum
         run: |
           # titanoboa resolves iso-dest from its own folder under _actions, so
           # the ISO lands there. Move it to where the next steps expect it.
           actions="$(dirname "$(dirname "$GITHUB_WORKSPACE")")/_actions"
-          iso="$(find output "$actions/ublue-os/titanoboa" -name lindle-live.iso -print -quit)"
+          iso="$(find output "$actions/ublue-os/titanoboa" -name "$ISO" -print -quit)"
           echo "titanoboa wrote $iso"
-          [ "$iso" = output/lindle-live.iso ] || mv "$iso" output/lindle-live.iso
+          [ "$iso" = "output/$ISO" ] || mv "$iso" "output/$ISO"
           cd output
-          sha256sum lindle-live.iso | tee lindle-live.iso-CHECKSUM
+          sha256sum "$ISO" | tee "$ISO-CHECKSUM"
           ls -lh
 
       - name: Install QEMU
@@ -77,13 +84,13 @@ jobs:
           sudo udevadm trigger --name-match=kvm
 
       - name: Boot the ISO and take screenshots
-        run: tests/live-screenshots.sh output/lindle-live.iso "$RUNNER_TEMP/screenshots"
+        run: tests/live-screenshots.sh "output/$ISO" "$RUNNER_TEMP/screenshots"
 
       - name: Upload the ISO
         if: github.event_name != 'pull_request'
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
-          name: lindle-live-iso
+          name: lindle${{ matrix.edition }}-live-iso
           path: output/
           if-no-files-found: error
           retention-days: 30
@@ -91,11 +98,11 @@ jobs:
 
       - name: Publish screenshots
         env:
-          BRANCH: ${{ github.event_name == 'pull_request' && format('screenshots-live-pr-{0}', github.event.pull_request.number) || 'screenshots-live' }}
+          BRANCH: ${{ github.event_name == 'pull_request' && format('screenshots-live{0}-pr-{1}', matrix.edition, github.event.pull_request.number) || format('screenshots-live{0}', matrix.edition) }}
         run: |
           cd "$RUNNER_TEMP/screenshots"
           {
-            echo "# Lindle Live screenshots"
+            echo "# Lindle Live screenshots ($ISO)"
             echo
             for f in *.png; do
               echo "## ${f%.png}"
