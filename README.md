@@ -13,6 +13,10 @@ Lindle is a modern, open source Linux desktop for people coming from macOS and W
 - **Updates:** the OS downloads updates in the background and applies them on the next restart; apps update in the background too. A bad OS update can be undone by choosing the previous entry at boot.
 - **Office-friendly fonts:** Carlito and Caladea, metric-compatible with Calibri and Cambria, so documents keep their layout.
 
+## Installing
+
+See [docs/install.md](docs/install.md) for the step-by-step guide: picking the right download, making a USB stick, trying Lindle Live, and installing next to Windows.
+
 ## Repository layout
 
 ```
