@@ -68,4 +68,4 @@ if [[ "${NVIDIA:-N}" == Y ]]; then
 fi
 
 # Exactly one kernel, so bootc and the boot splash agree on which one boots.
-[[ "$(ls /usr/lib/modules | wc -l)" == 1 ]]
+[[ "$(find /usr/lib/modules -mindepth 1 -maxdepth 1 | wc -l)" == 1 ]]
