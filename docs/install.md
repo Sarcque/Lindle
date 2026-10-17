@@ -4,6 +4,8 @@ This guide takes you from download to your first login. You need a USB stick of 
 
 ## 1. Pick your download
 
+> **Downloads are coming soon.** This guide is ready for when they are.
+
 | Your computer has | Download |
 |---|---|
 | An NVIDIA graphics card (GeForce, RTX, Quadro) | **Lindle for NVIDIA** |
