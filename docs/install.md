@@ -52,18 +52,20 @@ If the screen stays black or flickers, restart and choose **Try or Install Lindl
 
 ## 5. Install
 
-Double-click **Install Lindle** on the desktop and follow the steps.
+Double-click **Install Lindle** on the desktop. The installer has six short steps: language, date and time, installation method, storage, your account, and a final review. Nothing is written to disk until you click **Install** on the last one.
 
-**Where to install**
+**Installation method**
 
-- **Use the whole disk:** erases the disk and installs only Lindle. Choose this if you don't need anything on the computer anymore.
-- **Next to Windows:** keeps Windows and lets you choose at every start. Before you start, make room in Windows: open **Disk Management**, right-click your C: drive, choose **Shrink Volume**, and free at least 64 GB. Then pick **Use free space** in the installer.
+First check **Destination**: it shows which disk Lindle goes on. Use **Change destination** if you have more than one disk. Then pick how to install:
 
-**If Windows uses BitLocker** (common on new laptops), save your BitLocker recovery key first: in Windows, search for **Manage BitLocker** and choose **Back up your recovery key**. Installing next to Windows can make Windows ask for that key once.
+- **Use entire disk** erases that disk and installs only Lindle. Choose this if you don't need anything on it anymore.
+- **Use free space** keeps Windows and lets you choose between Windows and Lindle at every start. This option appears only when the disk has free space, so make room in Windows first: open **Disk Management**, right-click your C: drive, choose **Shrink Volume**, and free at least 64 GB.
 
-**Encrypt my data** keeps your files safe if your laptop is lost or stolen. You'll type a password at every start. Write it down: without it, nobody can get your files back, including you.
+**If Windows uses BitLocker** (common on new laptops), save your BitLocker recovery key before you install next to Windows: in Windows, search for **Manage BitLocker** and choose **Back up your recovery key**. Windows may ask for that key once after Lindle is installed.
 
-When the installer finishes, remove the USB stick and restart.
+**Storage configuration** has one choice: **Encrypt my data**. Tick it to keep your files safe if your laptop is lost or stolen. You'll type a password at every start. Write it down: without it, nobody can get your files back, including you.
+
+**Create Account** sets your name and password. On **Review and install**, check the disk once more and click **Install**. When it finishes, remove the USB stick and restart.
 
 ## 6. First start
 
