@@ -25,6 +25,7 @@ disk_config/             Installer ISO and VM disk settings
 lindle.env               Image name and metadata
 Justfile                 Local build commands
 docs/plan.md             Build plan and roadmap
+website/                 Project website (Node.js, Express)
 ```
 
 ## Building

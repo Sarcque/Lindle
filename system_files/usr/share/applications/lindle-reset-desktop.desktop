@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Reset Desktop Settings
+GenericName=Reset This PC
+Comment=Put the desktop back the way Lindle looks when you first start it
+Keywords=reset;defaults;factory;restore;
+Icon=edit-reset
+Exec=lindle-reset-desktop
+Categories=System;Settings;

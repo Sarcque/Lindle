@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Restore Previous Version
+GenericName=System Restore
+Comment=Go back to the version of Lindle from before the last update
+Keywords=rollback;undo;update;system restore;recovery;
+Icon=edit-undo-history
+Exec=lindle-restore
+Categories=System;Settings;

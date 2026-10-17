@@ -1,0 +1,31 @@
+/* Lindle look for the installer. Cockpit picks this folder over Fedora's
+   because os-release has ID=fedora and VARIANT_ID=lindle. */
+
+.logo {
+  background-image: url("logo.svg");
+}
+
+/* The header strip: Lindle gradient instead of Fedora blue. */
+.pf-v6-c-page__main-section:has(.logo) {
+  background: linear-gradient(90deg, #3D63F5 0%, #7A5AF8 100%) !important;
+}
+
+.pf-v6-c-page__main-section:has(.logo) h1,
+.pf-v6-c-page__main-section:has(.logo) .pf-v6-c-menu-toggle {
+  color: #FFFFFF !important;
+}
+
+/* Buttons and selected steps in the Lindle accent. */
+.anaconda {
+  --pf-t--global--color--brand--default: #3D63F5;
+  --pf-t--global--color--brand--hover: #2F52DB;
+  --pf-t--global--color--brand--clicked: #2F52DB;
+  --pf-t--global--text--color--link--default: #3D63F5;
+  --pf-t--global--text--color--link--hover: #2F52DB;
+}
+
+/* Number circle of the current step in the left-hand list. */
+.pf-v6-c-wizard__nav-link.pf-m-current::before {
+  background-color: #3D63F5 !important;
+  color: #FFFFFF !important;
+}

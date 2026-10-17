@@ -1,0 +1,6 @@
+[Unit]
+Description=Tell the user when a Lindle update is ready
+
+[Service]
+Type=oneshot
+ExecStart=/usr/libexec/lindle-update-notifier
