@@ -6,6 +6,8 @@
 ARG IMAGE=ghcr.io/sarcque/lindle:latest
 FROM ${IMAGE}
 ARG IMAGE
+# What installed systems follow for updates; lindle-nvidia for the NVIDIA edition.
+ARG UPDATE_REF=ghcr.io/sarcque/lindle:latest
 COPY src /src
 RUN --mount=type=cache,dst=/var/cache/libdnf5 \
-    IMAGE="${IMAGE}" /src/build.sh && rm -rf /src
+    IMAGE="${IMAGE}" UPDATE_REF="${UPDATE_REF}" /src/build.sh && rm -rf /src

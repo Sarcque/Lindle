@@ -66,3 +66,6 @@ grep -q '^application/x-ms-dos-executable=com.usebottles.bottles.desktop' /etc/x
 if [[ "${NVIDIA:-N}" == Y ]]; then
     rpm -qa 'kmod-nvidia*' | grep -q .
 fi
+
+# Exactly one kernel, so bootc and the boot splash agree on which one boots.
+[[ "$(find /usr/lib/modules -mindepth 1 -maxdepth 1 | wc -l)" == 1 ]]
