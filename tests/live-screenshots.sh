@@ -14,6 +14,7 @@ out="$2"
 mkdir -p "$out"
 work="$(mktemp -d)"
 mon="$work/monitor.sock"
+qmp="$work/qmp.sock"
 
 firmware=()
 if [[ -f /usr/share/ovmf/OVMF.fd ]]; then
@@ -30,7 +31,9 @@ qemu-system-x86_64 \
     "${firmware[@]}" \
     -device virtio-vga -display none \
     -nic user,model=virtio-net-pci \
+    -device qemu-xhci -device usb-tablet \
     -monitor "unix:$mon,server,nowait" \
+    -qmp "unix:$qmp,server,nowait" \
     -daemonize -pidfile "$work/qemu.pid"
 
 monitor() {
@@ -42,6 +45,20 @@ shot() {
     sleep 2
     convert "$work/$1.ppm" "$out/$1.png"
     echo "saved $out/$1.png"
+}
+
+# Click at a pixel of the 1280x800 screen, through the USB tablet.
+click() {
+    local x=$(($1 * 32767 / 1280)) y=$(($2 * 32767 / 800))
+    {
+        echo '{"execute":"qmp_capabilities"}'
+        echo '{"execute":"input-send-event","arguments":{"events":[{"type":"abs","data":{"axis":"x","value":'"$x"'}},{"type":"abs","data":{"axis":"y","value":'"$y"'}}]}}'
+        sleep 0.3
+        echo '{"execute":"input-send-event","arguments":{"events":[{"type":"btn","data":{"down":true,"button":"left"}}]}}'
+        sleep 0.1
+        echo '{"execute":"input-send-event","arguments":{"events":[{"type":"btn","data":{"down":false,"button":"left"}}]}}'
+        sleep 0.3
+    } | socat - "UNIX-CONNECT:$qmp" >/dev/null
 }
 
 type_text() {
@@ -74,3 +91,16 @@ sleep 3
 monitor "sendkey ret"
 sleep 60
 shot 03-installer
+
+# Walk through the installer up to the disk and encryption choices, without
+# installing. "Next" sits at the same spot on every step.
+next_step() {
+    click 407 757
+    sleep 10
+}
+next_step
+shot 04-installer-date
+next_step
+shot 05-installer-method
+next_step
+shot 06-installer-storage
